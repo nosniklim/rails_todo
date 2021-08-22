@@ -1,0 +1,19 @@
+<div class="cardnewPgae">
+  <div class='container'>
+    <%= form_with model: @card, url: {action: :create}, html: {class: 'cardnewForm'}, local: true do |f| %>
+      <%= f.hidden_field :list_id, value: @list.id %>
+      <% if @card.errors.any? %>
+        <p class="text-danger">Title must be less than 255 characters.</p>
+      <% end %>
+      <div class="cardnewForm_title">
+        <%= f.label :title %>
+        <%= f.text_field :title, autofocus: true, class: "form-control", placeholder: "Add a card..." %>
+      </div>
+      <div class="cardnewForm_memo">
+        <%= f.label :memo, "Add Comment" %>
+        <%= f.text_area :memo, autofocus: true, class: "form-control", placeholder: "Write a comment..." %>
+      <div class="text-center"><%= f.submit "Create", class: "submitBtn" %></div>
+      </div>
+    <% end %>
+  </div>
+</div>

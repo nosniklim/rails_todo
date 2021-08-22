@@ -1,0 +1,9 @@
+.listeditPage {
+  .listeditForm {
+    max-width: 500px;
+    margin: 100px auto 0;
+    &_title, &_position {
+      margin-bottom: 30px;
+    }
+  }
+}

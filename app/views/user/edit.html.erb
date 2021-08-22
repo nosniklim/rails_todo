@@ -1,0 +1,16 @@
+<div class="userInfo">
+  <div class="container">
+    <%= form_with model: @user, url: {action: :update}, html: {class: 'userForm'}, local: true do |f| %>
+      <% if @user.errors.any? %>
+        <p class="text-danger">
+        <% @user.errors.full_messages.each do |message| %>
+          <%= "error: #{message}" %>
+        <% end %>
+        </p>
+      <% end %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control userName", placeholder: "Enter your name..." %>
+      <div class="text-center"><%= f.submit "Save", class: "submitBtn" %></div>
+    <% end %>
+  </div>
+</div>

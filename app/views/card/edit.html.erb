@@ -1,0 +1,26 @@
+<div class="cardeditPgae">
+  <div class='container'>
+    <%= form_with model: @card, url: {action: :update}, html: {class: 'cardeditForm'}, local: true do |f| %>
+      <% if @card.errors.any? %>
+        <p class="text-danger">Title must be less than 255 characters.</p>
+      <% end %>
+      <div class="cardeditForm_title">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Add a card..." %>
+      </div>
+      <div class="cardeditForm_memo">
+        <%= f.label :memo %>
+        <%= f.text_area :memo, class: "form-control", placeholder: "Write a comment..." %>
+      </div>
+      <div class="cardeditForm_list">
+        <label>List</label>
+        <%= select :card, :list_id, @lists.map{|l| [l.title, l.id] }, {}, {class: 'form-control'} %>
+      </div>
+      <div class="cardeditForm_position">
+        <label>Position</label>
+        <%= select :card, :position, @positions.map{|p| [p.key, p.value] }, {selected: @card.position}, {class: 'form-control'} %>
+      </div>
+      <div class="text-center"><%= f.submit "Save", class: "submitBtn" %></div>
+    <% end %>
+  </div>
+</div>

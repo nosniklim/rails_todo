@@ -1,0 +1,29 @@
+    <header class="header">
+      <nav class="nav">
+        <ul class="header_menu">
+          <li class="nav-link">
+            <%= link_to edit_user_path(current_user), class: "nav-link" do %>
+              <i class="fas fa-user-alt"></i>
+              <span class="mr-1"><%= current_user.name %></span>
+            <% end %>
+          </li>
+          <li class="header_menu_title"><%= link_to "Todolist", root_path, class: "nav-link" %></li>
+          <li>
+            <ul class="header_menu_inner">
+              <li>
+                <%= link_to new_list_path, class: "nav-link" do %>
+                  <i class="fas fa-edit"></i>
+                  <span class="mr-1">New List</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to destroy_user_session_path, class: "nav-link", method: :delete do %>
+                  <i class="fas fa-sign-out-alt "></i>
+                  <span class="mr-1">Sign out</span>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
