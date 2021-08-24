@@ -4,8 +4,37 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+list_1: {
+  id: 1,
+  title: '1',
+  user_id: 1,
+  position: 1
+}
+
+list_2: {
+  id: 2,
+  title: '2',
+  user_id: 1,
+  position: 2
+}
+
+list_3: {
+  id: 3,
+  title: '3',
+  user_id: 1,
+  position: 3
+}
+
+list_4: {
+  id: 4,
+  title: '4',
+  user_id: 1,
+  position: 4
+}
+
+list_5: {
+  id: 5,
+  title: '5',
+  user_id: 1,
+  position: 5
+}
