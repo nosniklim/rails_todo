@@ -1,7 +1,10 @@
 ## アプリケーション概要
 ToDoリスト管理ツール
 
+<img src="./app/assets/images/sample.png" width="400">
+
 ## URL
+https://nosniklim-rails-todo.herokuapp.com/
 
 ### ゲスト用アカウント
 ```
