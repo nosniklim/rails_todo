@@ -32,6 +32,9 @@ Card.create(id: 8,title: 'Feature #8', memo: 'things to do', list_id: 2, positio
 Card.create(id: 9,title: 'Feature #9', memo: 'things to do', list_id: 2, position: 4)
 Card.create(id: 10,title: 'Feature #10', memo: 'things to do', list_id: 2, position: 5)
 
+Card.create(id: 11,title: 'Feature #11', memo: 'things to do', list_id: 3, position: 1)
+Card.create(id: 12,title: 'Feature #12', memo: 'things to do', list_id: 3, position: 2)
+
 7.times do |i|
   l = i + 1
   List.create(id: List.count + 1, title: "#{l}"*3, user_id: 2, position: l)
