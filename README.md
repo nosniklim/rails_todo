@@ -29,6 +29,11 @@ Password: guest#1
 * タスクカード作成機能
   * 新規作成、更新、削除、並べ替え
 
+
+### ER図
+<img src="./app/assets/images/er_diagram.png" width="400">
+
+
 ### テスト
 * リストとタスクカードの並べ替え機能に関するUnitテスト（Minitest）
 ```
