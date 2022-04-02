@@ -11,6 +11,7 @@ https://nosniklim-rails-todo.herokuapp.com/
 Name: Guest
 Password: guest#1
 ```
+お気軽にご利用ください。ただし、デモ環境として公開しているため、ご入力頂いたデータやアカウントは定期的にリセットさせて頂きますので予めご了承ください。
 
 ## 使用技術
 * Ruby 2.6.3
@@ -44,7 +45,6 @@ $ rails test
 ### 今後の予定
 * Vue.jsによるSPA化
 * RSpec導入
-* HerokuからAWSへ移行
 * CI/CD環境構築
 
 
