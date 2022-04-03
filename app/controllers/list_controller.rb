@@ -1,5 +1,5 @@
 class ListController < ApplicationController
-  before_action :set_list, only: %i(edit update destroy)
+  before_action :set_list, only: %i[edit update destroy]
 
   def new
     @list = List.new
@@ -15,7 +15,7 @@ class ListController < ApplicationController
   end
 
   def edit
-    @positions = List.where(user_id: current_user).select("position as key, position as value").order(:position)
+    @positions = List.where(user_id: current_user).select('position as key, position as value').order(:position)
   end
 
   def update
