@@ -59,3 +59,4 @@ gem 'devise'
 
 # Add Heroku Postgres in production: 'sqlite3' belongs to development environment instead
 gem 'pg', group: :production
+gem 'faker'
