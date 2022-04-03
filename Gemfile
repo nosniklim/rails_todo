@@ -58,7 +58,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'devise'
 
 # Add Heroku Postgres in production: 'sqlite3' belongs to development environment instead
-gem 'faker'
 gem 'pg', group: :production
+gem 'faker'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
