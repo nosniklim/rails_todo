@@ -1,12 +1,11 @@
 class CardController < ApplicationController
-  before_action :set_card, only: %i(show edit update destroy)
+  before_action :set_card, only: %i[show edit update destroy]
 
-  def show
-  end
+  def show; end
 
   def edit
     @lists = List.where(user: current_user).select(:id, :title)
-    @positions = Card.where(list_id: @card.list_id).select("position as key, position as value").order(:position)
+    @positions = Card.where(list_id: @card.list_id).select('position as key, position as value').order(:position)
   end
 
   def update
@@ -36,7 +35,8 @@ class CardController < ApplicationController
     redirect_to :root
   end
 
-private
+  private
+
   def card_params
     if params[:card][:position].blank?
       position = Card.where(list_id: params[:card][:list_id]).maximum(:position)
