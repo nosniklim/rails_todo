@@ -3,24 +3,11 @@ ToDoリスト管理ツール
 
 <img src="./app/assets/images/sample.png" width="400">
 
-## URL
-https://nosniklim-rails-todo.herokuapp.com/
-
-### ゲスト用アカウント
-```
-Name: Guest
-Password: guest#1
-```
-お気軽にご利用ください。ただし、デモ環境として公開しているため、ご入力頂いたデータやアカウントは定期的にリセットさせて頂きますので予めご了承ください。
-
 ## 使用技術
 * Ruby 2.6.3
 * Ruby on Rails 6.1.4
 * Nginx
 * Puma
-* Heroku
-  * Heroku Postgres
-  * Heroku Scheduler
 
 
 ## 機能一覧
