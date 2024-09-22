@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    # ビルド済みのイメージを使用
+    image: mysql:8.0
+    # 環境変数
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    # ホストマシンとコンテナ間のファイル共有
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+    # ホストマシンとコンテナ間で使用するポートのマッピング
+    ports:
+      - "3306:3306"
+
+  web:
+    # Dockerfileからイメージをビルド
+    build: .
+    # コンテナ起動時に実行するコマンドを上書き
+    command: bundle exec rails s -b '0.0.0.0'
+    # ホストマシンとコンテナ間のファイル共有
+    volumes:
+      - ".:/app"
+    # ホストマシンとコンテナ間で使用するポートのマッピング
+    ports:
+      - "3000:3000"
+    # サービスの依存関係と起動順
+    depends_on:
+      - db
+    # 環境変数
+    environment:
+      DATABASE_URL: mysql2://user:password@db:3306/myapp_development
