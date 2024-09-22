@@ -16,7 +16,7 @@ services:
     ports:
       - "3306:3306"
 
-  web:
+  app:
     # Dockerfileからイメージをビルド
     build: .
     # コンテナ起動時に実行するコマンドを上書き
