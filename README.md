@@ -6,8 +6,10 @@ ToDoリスト管理ツール
 ## 使用技術
 * Ruby 2.6.3
 * Ruby on Rails 6.1.4
+* MySQL 8.0
 * Nginx
 * Puma
+* Docker
 
 
 ## 機能一覧
