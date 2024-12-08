@@ -6,8 +6,10 @@ ToDoリスト管理ツール
 ## 使用技術
 * Ruby 2.6.3
 * Ruby on Rails 6.1.4
+* MySQL 8.0
 * Nginx
 * Puma
+* Docker
 
 
 ## 機能一覧
@@ -21,17 +23,56 @@ ToDoリスト管理ツール
 ### ER図
 <img src="./app/assets/images/er_diagram.png" width="400">
 
+### Setup
+#### 起動方法
+1. Dockerをビルド（初回のみ）
+```
+$ docker compose build
+```
 
-### テスト
+2. コンテナ起動
+```
+$ docker compose up
+```
+
+3. seedを実行
+```
+$ docker compose exec app bin/rails db:seed
+```
+
+4. ブラウザからアクセス
+```
+http://0.0.0.0:3000
+```
+
+#### ゲスト用アカウント
+```
+Name: Guest
+Password: guest#1
+```
+
+### Tips
+#### Bash
+```
+$ docker compose exec app bash
+```
+
+#### Console
+```
+$ docker compose exec app bin/rails console
+```
+
+#### Testing
 * リストとタスクカードの並べ替え機能に関するUnitテスト（Minitest）
 ```
-$ rails test
+$ docker compose exec app bin/rails test
 ```
 
 
 ### 今後の予定
-* Vue.jsによるSPA化
-* RSpec導入
+* RSpecの整備
 * CI/CD環境構築
+* Railsのバージョンアップ
+* ReactによるSPA化
 
 

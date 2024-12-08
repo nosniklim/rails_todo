@@ -5,8 +5,8 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4', group: :development
+# Use mysql2 as the database for Active Record
+gem 'mysql2', '~> 0.5'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -61,8 +61,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'devise'
 
-# Add Heroku Postgres in production: 'sqlite3' belongs to development environment instead
-gem 'pg', group: :production
 gem 'faker'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
