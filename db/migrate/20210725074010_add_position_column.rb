@@ -4,7 +4,7 @@ class AddPositionColumn < ActiveRecord::Migration[6.1]
   end
 
   def change
-    add_column :lists, :position, :integer, null: false, default: ''
-    add_column :cards, :position, :integer, null: false, default: ''
+    add_column :lists, :position, :integer, null: false, default: 0
+    add_column :cards, :position, :integer, null: false, default: 0
   end
 end
