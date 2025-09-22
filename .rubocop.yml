@@ -4,6 +4,7 @@ require:
   - rubocop-rails
 
 AllCops:
+  TargetRubyVersion: 2.6 # TODO: update version if update Ruby
   NewCops: enable
   Exclude:
     - 'db/schema.rb'
