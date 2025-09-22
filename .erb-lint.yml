@@ -1,0 +1,5 @@
+linters:
+  FinalNewline:
+    enabled: true
+  RuboCop:
+    enabled: true
