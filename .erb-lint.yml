@@ -3,3 +3,4 @@ linters:
     enabled: true
   RuboCop:
     enabled: true
+    config_file: .rubocop.yml
