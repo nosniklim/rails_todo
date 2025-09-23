@@ -73,3 +73,14 @@ jobs:
         run: |
           bin/rails routes >/dev/null
           bin/rails runner 'puts "Boot OK"'
+
+      # --- App tests ---
+      - name: Run RSpec
+        if: ${{ hashFiles('spec/**/*') != '' }}
+        run: bundle exec rspec --format progress --force-color
+
+      - name: Run Minitest
+        if: ${{ hashFiles('test/**/*') != '' }}
+        env:
+          DISABLE_SPRING: 1
+        run: bin/rails test
