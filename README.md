@@ -11,6 +11,11 @@ ToDoリスト管理ツール
 * Puma
 * Docker
 
+### 品質保証・開発支援ツール
+* 静的解析: RuboCop、ERB Lint
+* セキュリティチェック: Bundler Audit、Brakeman
+* テスト: RSpec（一部Unitテストは Minitest）
+* CI: GitHub Actions
 
 ## 機能一覧
 * ユーザー登録、ログイン機能（devise）
@@ -70,9 +75,9 @@ $ docker compose exec app bin/rails test
 
 
 ### 今後の予定
-* RSpecの整備
-* CI/CD環境構築
+* RSpecを整備
 * Railsのバージョンアップ
+* CI/CD環境を整備
 * ReactによるSPA化
 
 
