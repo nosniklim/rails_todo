@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint_and_smoke:
-    runs-on: ubuntu-22.04  # Ruby2.6系の安定版
+    runs-on: ubuntu-20.04  # Ruby2.6系の安定版
     timeout-minutes: 15
 
     services:
