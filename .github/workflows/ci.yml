@@ -31,7 +31,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: file   # .ruby-version参照
+          ruby-version: 2.6.3   # fileで.ruby-versionを参照すると認識されなかった
           bundler-cache: true  # vendor/bundleを自動的にキャッシュ
 
       - name: Set up Node/Yarn
