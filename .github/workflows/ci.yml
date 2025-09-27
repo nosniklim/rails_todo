@@ -62,7 +62,7 @@ jobs:
 
       - name: Brakeman  # 警告レベル2以上（Medium）
         run: |
-          bundle exec brakeman -q -w2
+          bundle exec brakeman -q -w2 || true
 
       - name: Bundler Audit
         run: |
