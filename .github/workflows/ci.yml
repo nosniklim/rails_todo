@@ -22,9 +22,6 @@ jobs:
           --health-cmd="mysqladmin ping -ppassword"
           --health-interval=10s --health-timeout=5s --health-retries=10
 
-    env:
-      RAILS_ENV: test
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
