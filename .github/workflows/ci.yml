@@ -42,10 +42,9 @@ jobs:
         if: hashFiles('yarn.lock') != ''
         run: yarn install --frozen-lockfile
 
-      - run: cp config/database.yml.ci config/database.yml
-
       - name: DB prepare
         run: |
+          cp config/database.yml.ci config/database.yml
           bin/rails db:prepare
 
       # ---- Lint / SAST ----
