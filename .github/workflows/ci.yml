@@ -8,6 +8,7 @@ on:
 jobs:
   lint_and_smoke:
     runs-on: ubuntu-latest
+    environment: rails_todo 
     timeout-minutes: 15
 
     services:
