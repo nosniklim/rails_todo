@@ -1,0 +1,9 @@
+linters:
+  FinalNewline:
+    enabled: true
+  RuboCop:
+    enabled: true
+    config_file: .rubocop.yml
+
+exclude:
+  - "vendor/**/*"
