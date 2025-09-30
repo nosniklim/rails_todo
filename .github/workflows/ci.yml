@@ -6,30 +6,20 @@ on:
     branches: [ main, develop, "feature/**", "refactor/**" ]
   pull_request:
 
-jobs:
-  setup_ruby:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+env:
+  RAILS_ENV: test
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
-          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
-  setup_database:
+jobs:
+  setup_env:
     runs-on: ubuntu-latest
-    environment: rails_todo
     services:
       mysql:
         image: mysql:8
         env:
-          RAILS_ENV: test
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
         ports: ["3306:3306"]
@@ -40,15 +30,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: DB prepare
-        run: |
-          cp config/database.yml.ci config/database.yml
-          bin/rails db:prepare
-  setup_yarn:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
+          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
 
       - name: Set up Node/Yarn
         uses: actions/setup-node@v4
@@ -59,18 +45,14 @@ jobs:
       - name: Install JS deps (if any)
         if: hashFiles('yarn.lock') != ''
         run: yarn install --frozen-lockfile
-  setup_ci_env:
-    needs: [setup_database, setup_yarn]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
-          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
+
+      - name: DB prepare
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:prepare
 
   lint:
-    needs: setup_ruby
+    needs: setup_env
     runs-on: ubuntu-latest
     steps:
       # ---- Lint ----
@@ -84,7 +66,7 @@ jobs:
           bundle exec erblint --lint-all --format compact
 
   security:
-    needs: setup_ruby
+    needs: setup_env
     runs-on: ubuntu-latest
     steps:
       # ---- SAST ----
@@ -97,7 +79,7 @@ jobs:
           bundle exec bundler-audit check --update || true
 
   smoke:
-    needs: setup_ci_env
+    needs: setup_env
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -108,7 +90,7 @@ jobs:
           bin/rails runner 'puts "Boot OK"'
 
   tests:
-    needs: setup_ci_env
+    needs: setup_env
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
