@@ -37,32 +37,6 @@ jobs:
           ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
           bundler-cache: true  # vendor/bundleを自動的にキャッシュ
 
-      - name: Debug environment variables
-        run: printenv | grep DB
-
-      - name: Check Secrets
-        run: |
-          if [ -z "${{ secrets.DB_HOST }}" ]; then
-            echo "DB_HOST is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.DB_USERNAME }}" ]; then
-            echo "DB_USERNAME is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.DB_PASSWORD }}" ]; then
-            echo "DB_PASSWORD is not set"
-            exit 1
-          fi
-          if [ -z "${{ secrets.DB_NAME_TEST }}" ]; then
-            echo "DB_NAME_TEST is not set"
-            exit 1
-          fi
-          echo "All secrets are set"
-
-      - name: Check MySQL status
-        run: mysqladmin ping --host=mysql --user=root --password=$DB_PASSWORD
-
       - name: Set up Node/Yarn
         uses: actions/setup-node@v4
         with:
