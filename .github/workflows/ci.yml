@@ -37,6 +37,9 @@ jobs:
           --health-cmd="mysqladmin ping -ppassword"
           --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: DB prepare
         run: |
           cp config/database.yml.ci config/database.yml
