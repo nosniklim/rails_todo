@@ -16,6 +16,7 @@ env:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    environment: rails_todo 
     services:
       mysql:
         image: mysql:8
