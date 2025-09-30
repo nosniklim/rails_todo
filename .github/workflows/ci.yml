@@ -105,5 +105,5 @@ jobs:
       - name: Run Minitest
         if: ${{ hashFiles('test/**/*') != '' }}
         env:
-          DISABLE_SPRING: 1
+          DISABLE_SPRING: 1 # CIでは必要ないので無効化
         run: bin/rails test
