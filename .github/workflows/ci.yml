@@ -60,7 +60,14 @@ jobs:
         if: hashFiles('yarn.lock') != ''
         run: yarn install --frozen-lockfile
   setup_ci_env:
-    needs: [setup_ruby, setup_database, setup_yarn]
+    needs: [setup_database, setup_yarn]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
+          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
 
   lint:
     needs: setup_ruby
