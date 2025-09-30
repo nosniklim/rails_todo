@@ -11,3 +11,4 @@ AllCops:
     - 'bin/**/*'
     - 'node_modules/**/*'
     - 'vendor/**/*'
+    - '.github/workflows/**/*.yml'
