@@ -7,9 +7,58 @@ on:
   pull_request:
 
 jobs:
-  lint_and_smoke:
+  lint:
     runs-on: ubuntu-latest
-    environment: rails_todo 
+    environment: rails_todo
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
+          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
+
+      # ---- Lint ----
+      - name: RuboCop
+        run: |
+          bundle exec rubocop --format progress
+
+      - name: ERB Lint
+        if: hashFiles('**/*.erb') != ''
+        run: |
+          bundle exec erblint --lint-all --format compact
+
+  security:
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
+          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
+
+      # ---- SAST ----
+      - name: Brakeman  # 警告レベル2以上（Medium）
+        run: |
+          bundle exec brakeman -q -w2 || true
+
+      - name: Bundler Audit
+        run: |
+          bundle exec bundler-audit check --update || true
+
+  smoke:
+    runs-on: ubuntu-latest
+    environment: rails_todo
     timeout-minutes: 15
 
     services:
@@ -48,29 +97,52 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bin/rails db:prepare
 
-      # ---- Lint / SAST ----
-      - name: RuboCop
-        run: |
-          bundle exec rubocop --format progress
-
-      - name: ERB Lint
-        if: hashFiles('**/*.erb') != ''
-        run: |
-          bundle exec erblint --lint-all --format compact
-
-      - name: Brakeman  # 警告レベル2以上（Medium）
-        run: |
-          bundle exec brakeman -q -w2 || true
-
-      - name: Bundler Audit
-        run: |
-          bundle exec bundler-audit check --update || true
-
       # ---- Smoke（起動/ルーティング解決の代替）----
       - name: Smoke (routes & boot)
         run: |
           bin/rails routes >/dev/null
           bin/rails runner 'puts "Boot OK"'
+
+  tests:
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: app_test
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -ppassword"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
+          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
+
+      - name: Set up Node/Yarn
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'  # 安定版
+          cache: 'yarn'
+
+      - name: Install JS deps (if any)
+        if: hashFiles('yarn.lock') != ''
+        run: yarn install --frozen-lockfile
+
+      - name: DB prepare
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:prepare
 
       # --- App tests ---
       - name: Run RSpec
