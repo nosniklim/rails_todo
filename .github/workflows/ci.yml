@@ -49,7 +49,6 @@ setup_ci_env: &setup_ci_env
 
 jobs:
   lint:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       <<: *setup_ruby
@@ -65,7 +64,7 @@ jobs:
           bundle exec erblint --lint-all --format compact
 
   security:
-    needs: setup
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       <<: *setup_ruby
@@ -79,8 +78,26 @@ jobs:
         run: |
           bundle exec bundler-audit check --update || true
 
+  database:
+    needs: lint
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+
+    services:
+      <<: *mysql_service
+
+    steps:
+      <<: *setup_ci_env
+
+      # ---- DB setup ----
+      - name: DB prepare
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:prepare
+
   smoke:
-    needs: setup
+    needs: database
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
@@ -98,7 +115,7 @@ jobs:
           bin/rails runner 'puts "Boot OK"'
 
   tests:
-    needs: setup
+    needs: database
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
