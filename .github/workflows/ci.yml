@@ -2,7 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop, "feature/**" ]
+    # 全てのブランチでCIを走らせたい場合はbranchesを削除
+    branches: [ main, develop, "feature/**", "refactor/**" ]
   pull_request:
 
 jobs:
