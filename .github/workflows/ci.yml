@@ -61,7 +61,7 @@ jobs:
           echo "All secrets are set"
 
       - name: Check MySQL status
-        run: mysqladmin ping -ppassword
+        run: mysqladmin ping --host=mysql --user=root --password=$DB_PASSWORD
 
       - name: Set up Node/Yarn
         uses: actions/setup-node@v4
