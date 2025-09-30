@@ -59,6 +59,8 @@ jobs:
       - name: Install JS deps (if any)
         if: hashFiles('yarn.lock') != ''
         run: yarn install --frozen-lockfile
+  setup_ci_env:
+    needs: [setup_ruby, setup_database, setup_yarn]
 
   lint:
     needs: setup_ruby
@@ -88,7 +90,7 @@ jobs:
           bundle exec bundler-audit check --update || true
 
   smoke:
-    needs: [setup_ruby, setup_database, setup_yarn]
+    needs: setup_ci_env
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -99,7 +101,7 @@ jobs:
           bin/rails runner 'puts "Boot OK"'
 
   tests:
-    needs: [setup_ruby, setup_database, setup_yarn]
+    needs: setup_ci_env
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
