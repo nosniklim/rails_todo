@@ -14,7 +14,7 @@ env:
   DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
 
 jobs:
-  setup_env:
+  setup:
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -52,7 +52,7 @@ jobs:
           bin/rails db:prepare
 
   lint:
-    needs: setup_env
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       # ---- Lint ----
@@ -66,7 +66,7 @@ jobs:
           bundle exec erblint --lint-all --format compact
 
   security:
-    needs: setup_env
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       # ---- SAST ----
@@ -79,7 +79,7 @@ jobs:
           bundle exec bundler-audit check --update || true
 
   smoke:
-    needs: setup_env
+    needs: setup
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -90,7 +90,7 @@ jobs:
           bin/rails runner 'puts "Boot OK"'
 
   tests:
-    needs: setup_env
+    needs: setup
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
