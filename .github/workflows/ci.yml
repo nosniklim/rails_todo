@@ -13,49 +13,47 @@ env:
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
 
+mysql_service: &mysql_service
+  mysql:
+    image: mysql:8
+    env:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: app_test
+    ports: ["3306:3306"]
+    options: >-
+      --health-cmd="mysqladmin ping -ppassword"
+      --health-interval=10s --health-timeout=5s --health-retries=10
+
+setup_ruby: &setup_ruby
+  - name: Checkout
+    uses: actions/checkout@v4
+
+  - name: Set up Ruby
+    uses: ruby/setup-ruby@v1
+    with:
+      ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
+      bundler-cache: true  # vendor/bundleを自動的にキャッシュ
+
+setup_ci_env: &setup_ci_env
+  <<: *setup_ruby
+
+  - name: Set up Node/Yarn
+    uses: actions/setup-node@v4
+    with:
+      node-version: '16'  # 安定版
+      cache: 'yarn'
+
+  - name: Install JS deps (if any)
+    if: hashFiles('yarn.lock') != ''
+    run: yarn install --frozen-lockfile
+
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    environment: rails_todo 
-    services:
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: app_test
-        ports: ["3306:3306"]
-        options: >-
-          --health-cmd="mysqladmin ping -ppassword"
-          --health-interval=10s --health-timeout=5s --health-retries=10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
-          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
-
-      - name: Set up Node/Yarn
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'  # 安定版
-          cache: 'yarn'
-
-      - name: Install JS deps (if any)
-        if: hashFiles('yarn.lock') != ''
-        run: yarn install --frozen-lockfile
-
-      - name: DB prepare
-        run: |
-          cp config/database.yml.ci config/database.yml
-          bin/rails db:prepare
-
   lint:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      <<: *setup_ruby
+
       # ---- Lint ----
       - name: RuboCop
         run: |
@@ -70,6 +68,8 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      <<: *setup_ruby
+
       # ---- SAST ----
       - name: Brakeman  # 警告レベル2以上（Medium）
         run: |
@@ -82,8 +82,15 @@ jobs:
   smoke:
     needs: setup
     runs-on: ubuntu-latest
+    environment: rails_todo
     timeout-minutes: 15
+
+    services:
+      <<: *mysql_service
+
     steps:
+      <<: *setup_ci_env
+
       # ---- Smoke（起動/ルーティング解決の代替）----
       - name: Smoke (routes & boot)
         run: |
@@ -93,8 +100,15 @@ jobs:
   tests:
     needs: setup
     runs-on: ubuntu-latest
+    environment: rails_todo
     timeout-minutes: 15
+
+    services:
+      <<: *mysql_service
+
     steps:
+      <<: *setup_ci_env
+
       # --- App tests ---
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*') != '' }}
