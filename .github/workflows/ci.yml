@@ -13,47 +13,16 @@ env:
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
 
-mysql_service: &mysql_service
-  mysql:
-    image: mysql:8
-    env:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: app_test
-    ports: ["3306:3306"]
-    options: >-
-      --health-cmd="mysqladmin ping -ppassword"
-      --health-interval=10s --health-timeout=5s --health-retries=10
-
-setup_ruby: &setup_ruby
-  - name: Checkout
-    uses: actions/checkout@v4
-
-  - name: Set up Ruby
-    uses: ruby/setup-ruby@v1
-    with:
-      ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
-      bundler-cache: true  # vendor/bundleを自動的にキャッシュ
-
-setup_ci_env: &setup_ci_env
-  <<: *setup_ruby
-
-  - name: Set up Node/Yarn
-    uses: actions/setup-node@v4
-    with:
-      node-version: '16'  # 安定版
-      cache: 'yarn'
-
-  - name: Install JS deps (if any)
-    if: hashFiles('yarn.lock') != ''
-    run: yarn install --frozen-lockfile
-
 jobs:
+  # ---- Lint ----
   lint:
     runs-on: ubuntu-latest
     steps:
-      <<: *setup_ruby
+      - name: Set up Ruby
+        uses: ./.github/workflows/setup-ruby.yml
+        with:
+          ruby_version: 2.6.3
 
-      # ---- Lint ----
       - name: RuboCop
         run: |
           bundle exec rubocop --format progress
@@ -63,13 +32,17 @@ jobs:
         run: |
           bundle exec erblint --lint-all --format compact
 
+  # ---- Security ----
   security:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      <<: *setup_ruby
+      - name: Set up Ruby
+        uses: ./.github/workflows/setup-ruby.yml
+        with:
+          ruby_version: 2.6.3
 
-      # ---- SAST ----
+      # SAST
       - name: Brakeman  # 警告レベル2以上（Medium）
         run: |
           bundle exec brakeman -q -w2 || true
@@ -78,55 +51,51 @@ jobs:
         run: |
           bundle exec bundler-audit check --update || true
 
+  # ---- Database ----
   database:
     needs: lint
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
+    uses: ./.github/workflows/mysql-service.yml
+    with:
+      mysql_root_password: password
+      mysql_database: app_test
 
-    services:
-      <<: *mysql_service
-
-    steps:
-      <<: *setup_ci_env
-
-      # ---- DB setup ----
-      - name: DB prepare
-        run: |
-          cp config/database.yml.ci config/database.yml
-          bin/rails db:prepare
-
+  # ---- Smoke Tests ----
   smoke:
     needs: database
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
-
-    services:
-      <<: *mysql_service
+    uses: ./.github/workflows/setup-ci-env.yml
+    with:
+      ruby_version: 2.6.3
+      node_version: 16  # 安定版
+      mysql_root_password: password
+      mysql_database: app_test
 
     steps:
-      <<: *setup_ci_env
-
-      # ---- Smoke（起動/ルーティング解決の代替）----
+      # Check routes and boot
       - name: Smoke (routes & boot)
         run: |
           bin/rails routes >/dev/null
           bin/rails runner 'puts "Boot OK"'
 
+  # ---- Tests ----
   tests:
     needs: database
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
-
-    services:
-      <<: *mysql_service
+    uses: ./.github/workflows/setup-ci-env.yml
+    with:
+      ruby_version: 2.6.3
+      node_version: 16 # 安定版
+      mysql_root_password: password
+      mysql_database: app_test
 
     steps:
-      <<: *setup_ci_env
-
-      # --- App tests ---
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*') != '' }}
         run: bundle exec rspec --format progress --force-color
