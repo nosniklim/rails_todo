@@ -1,4 +1,4 @@
-name: MySQL Service Setup
+name: MySQL Setup
 
 on:
   workflow_call:

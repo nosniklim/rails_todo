@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
-    uses: ./.github/workflows/mysql-service.yml
+    uses: ./.github/workflows/db-prepare.yml
     with:
       mysql_root_password: password
       mysql_database: app_test

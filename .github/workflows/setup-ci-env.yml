@@ -44,7 +44,7 @@ jobs:
 
   setup-database:
     needs: setup-ruby
-    uses: ./.github/workflows/mysql-service.yml
+    uses: ./.github/workflows/setup-mysql.yml
     with:
       mysql_root_password: ${{ inputs.mysql_root_password }}
       mysql_database: ${{ inputs.mysql_database }}
