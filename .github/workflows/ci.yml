@@ -100,7 +100,7 @@ jobs:
 
     env:
       # 外部DBの参照を防止するためenvをオーバーライド
-      DB_HOST: mysql
+      DB_HOST: 127.0.0.1
       RAILS_ENV: test
 
     steps:
