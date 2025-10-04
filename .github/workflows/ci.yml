@@ -78,6 +78,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.3
+
       - name: Prepare Database
         run: |
           cp config/database.yml.ci config/database.yml
