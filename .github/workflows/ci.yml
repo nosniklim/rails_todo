@@ -2,52 +2,30 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop, "feature/**" ]
+    # 全てのブランチでCIを走らせたい場合はbranchesを削除
+    branches: [ main, develop, "feature/**", "refactor/**" ]
   pull_request:
 
+env:
+  RAILS_ENV: test
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
+
 jobs:
-  lint_and_smoke:
+  # ---- Lint ----
+  lint:
     runs-on: ubuntu-latest
-    environment: rails_todo 
-    timeout-minutes: 15
-
-    services:
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: app_test
-        ports: ["3306:3306"]
-        options: >-
-          --health-cmd="mysqladmin ping -ppassword"
-          --health-interval=10s --health-timeout=5s --health-retries=10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ./.github/actions/setup-ruby
         with:
-          ruby-version: 2.6.3  # fileで.ruby-versionを指定すると認識されなかった
-          bundler-cache: true  # vendor/bundleを自動的にキャッシュ
+          ruby_version: 2.6.3
 
-      - name: Set up Node/Yarn
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'  # 安定版
-          cache: 'yarn'
-
-      - name: Install JS deps (if any)
-        if: hashFiles('yarn.lock') != ''
-        run: yarn install --frozen-lockfile
-
-      - name: DB prepare
-        run: |
-          cp config/database.yml.ci config/database.yml
-          bin/rails db:prepare
-
-      # ---- Lint / SAST ----
       - name: RuboCop
         run: |
           bundle exec rubocop --format progress
@@ -57,6 +35,19 @@ jobs:
         run: |
           bundle exec erblint --lint-all --format compact
 
+  # ---- Security ----
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.3
+
+      # SAST
       - name: Brakeman  # 警告レベル2以上（Medium）
         run: |
           bundle exec brakeman -q -w2 || true
@@ -65,13 +56,80 @@ jobs:
         run: |
           bundle exec bundler-audit check --update || true
 
-      # ---- Smoke（起動/ルーティング解決の代替）----
+  # ---- Smoke Tests ----
+  smoke:
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.3
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 18
+      
+      # Check routes and boot
       - name: Smoke (routes & boot)
         run: |
           bin/rails routes >/dev/null
           bin/rails runner 'puts "Boot OK"'
 
-      # --- App tests ---
+  # ---- Tests ----
+  tests:
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.DB_NAME_TEST }}
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -p$$MYSQL_ROOT_PASSWORD"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+
+    env:
+      # 外部DBの参照を防止するためenvをオーバーライド
+      DB_HOST: 127.0.0.1
+      RAILS_ENV: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.3
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 18
+
+      - name: Wait for MySQL (port open)
+        run: |
+          for i in {1..30}; do
+            (echo > /dev/tcp/${DB_HOST}/3306) >/dev/null 2>&1 && break
+            echo "Waiting for MySQL on ${DB_HOST}:3306..."
+            sleep 2
+          done
+
+      - name: Prepare Database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:prepare
+
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*') != '' }}
         run: bundle exec rspec --format progress --force-color
@@ -79,12 +137,5 @@ jobs:
       - name: Run Minitest
         if: ${{ hashFiles('test/**/*') != '' }}
         env:
-          DISABLE_SPRING: 1
+          DISABLE_SPRING: 1 # CIでは必要ないので無効化
         run: bin/rails test
-
-env:
-  RAILS_ENV: test
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_USERNAME: ${{ secrets.DB_USERNAME }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
