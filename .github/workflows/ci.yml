@@ -57,8 +57,34 @@ jobs:
         run: |
           bundle exec bundler-audit check --update || true
 
-  # ---- Database ----
-  database:
+  # ---- Smoke Tests ----
+  smoke:
+    needs: lint
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.3
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 16
+      
+      # Check routes and boot
+      - name: Smoke (routes & boot)
+        run: |
+          bin/rails routes >/dev/null
+          bin/rails runner 'puts "Boot OK"'
+
+  # ---- Tests ----
+  tests:
     needs: lint
     runs-on: ubuntu-latest
     environment: rails_todo
@@ -84,80 +110,15 @@ jobs:
         with:
           ruby_version: 2.6.3
 
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 16
+
       - name: Prepare Database
         run: |
           cp config/database.yml.ci config/database.yml
           bin/rails db:prepare
-
-  # ---- Smoke Tests ----
-  smoke:
-    needs: database
-    runs-on: ubuntu-latest
-    environment: rails_todo
-    timeout-minutes: 15
-
-    services:
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
-          MYSQL_DATABASE: ${{ env.DB_NAME_TEST }}
-        ports: ["3306:3306"]
-        options: >-
-          --health-cmd="mysqladmin ping -ppassword"
-          --health-interval=10s --health-timeout=5s --health-retries=10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ./.github/actions/setup-ruby
-        with:
-          ruby_version: 2.6.3
-
-      - name: Set up Node/Yarn
-        uses: ./.github/actions/setup-node
-        with:
-          node_version: 16
-      
-      # Check routes and boot
-      - name: Smoke (routes & boot)
-        run: |
-          bin/rails routes >/dev/null
-          bin/rails runner 'puts "Boot OK"'
-
-  # ---- Tests ----
-  tests:
-    needs: database
-    runs-on: ubuntu-latest
-    environment: rails_todo
-    timeout-minutes: 15
-
-    services:
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
-          MYSQL_DATABASE: ${{ env.DB_NAME_TEST }}
-        ports: ["3306:3306"]
-        options: >-
-          --health-cmd="mysqladmin ping -ppassword"
-          --health-interval=10s --health-timeout=5s --health-retries=10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ./.github/actions/setup-ruby
-        with:
-          ruby_version: 2.6.3
-
-      - name: Set up Node/Yarn
-        uses: ./.github/actions/setup-node
-        with:
-          node_version: 16
 
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*') != '' }}
