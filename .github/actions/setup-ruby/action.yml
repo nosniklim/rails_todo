@@ -1,18 +1,14 @@
 name: Ruby Setup
 
-on:
-  workflow_call:
-    inputs:
-      ruby_version:
-        description: "The Ruby version to use"
-        required: true
-        type: string
+inputs:
+  ruby_version:
+    description: "The Ruby version to use"
+    required: true
 
-jobs:
-  setup-ruby:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repository
+runs:
+  using: "composite"
+  steps:
+    # Checkout the repository
       - name: Checkout
         uses: actions/checkout@v4
 

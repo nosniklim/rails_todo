@@ -12,6 +12,8 @@ env:
   DB_USERNAME: ${{ secrets.DB_USERNAME }}
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
+  MYSQL_ROOT_PASSWORD: password
+  MYSQL_DATABASE: app_test
 
 jobs:
   # ---- Lint ----
@@ -19,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Ruby
-        uses: ./.github/workflows/setup-ruby.yml
+        uses: ./.github/actions/setup-ruby
         with:
           ruby_version: 2.6.3
 
@@ -38,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Ruby
-        uses: ./.github/workflows/setup-ruby.yml
+        uses: ./.github/actions/setup-ruby
         with:
           ruby_version: 2.6.3
 
@@ -57,10 +59,20 @@ jobs:
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
-    uses: ./.github/workflows/db-prepare.yml
-    with:
-      mysql_root_password: password
-      mysql_database: app_test
+
+    services:
+      mysql:
+        image: mysql:8
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -ppassword"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+      - name: Prepare Database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:prepare
 
   # ---- Smoke Tests ----
   smoke:
@@ -68,14 +80,26 @@ jobs:
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
-    uses: ./.github/workflows/setup-ci-env.yml
-    with:
-      ruby_version: 2.6.3
-      node_version: 16  # 安定版
-      mysql_root_password: password
-      mysql_database: app_test
+
+    services:
+      mysql:
+        image: mysql:8
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -ppassword"
+          --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.3
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 16
+      
       # Check routes and boot
       - name: Smoke (routes & boot)
         run: |
@@ -88,14 +112,26 @@ jobs:
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
-    uses: ./.github/workflows/setup-ci-env.yml
-    with:
-      ruby_version: 2.6.3
-      node_version: 16 # 安定版
-      mysql_root_password: password
-      mysql_database: app_test
+
+    services:
+      mysql:
+        image: mysql:8
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -ppassword"
+          --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.3
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 16
+
       - name: Run RSpec
         if: ${{ hashFiles('spec/**/*') != '' }}
         run: bundle exec rspec --format progress --force-color
