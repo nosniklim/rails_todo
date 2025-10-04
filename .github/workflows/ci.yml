@@ -12,8 +12,8 @@ env:
   DB_USERNAME: ${{ secrets.DB_USERNAME }}
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
-  MYSQL_ROOT_PASSWORD: password
-  MYSQL_DATABASE: app_test
+  MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+  MYSQL_DATABASE: ${{ env.DB_NAME_TEST }}
 
 jobs:
   # ---- Lint ----
