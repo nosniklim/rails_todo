@@ -37,7 +37,6 @@ jobs:
 
   # ---- Security ----
   security:
-    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -59,7 +58,6 @@ jobs:
 
   # ---- Smoke Tests ----
   smoke:
-    needs: lint
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
@@ -85,7 +83,6 @@ jobs:
 
   # ---- Tests ----
   tests:
-    needs: lint
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
