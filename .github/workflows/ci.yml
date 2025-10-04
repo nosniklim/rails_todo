@@ -117,6 +117,14 @@ jobs:
         with:
           node_version: 18
 
+      - name: Wait for MySQL (port open)
+        run: |
+          for i in {1..30}; do
+            (echo > /dev/tcp/${DB_HOST}/3306) >/dev/null 2>&1 && break
+            echo "Waiting for MySQL on ${DB_HOST}:3306..."
+            sleep 2
+          done
+
       - name: Prepare Database
         run: |
           cp config/database.yml.ci config/database.yml
