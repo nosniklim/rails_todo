@@ -98,6 +98,11 @@ jobs:
           --health-cmd="mysqladmin ping -p${{ env.DB_PASSWORD }}"
           --health-interval=10s --health-timeout=5s --health-retries=10
 
+    env:
+      # 外部DBの参照を防止するためenvをオーバーライド
+      DB_HOST: mysql
+      RAILS_ENV: test
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
