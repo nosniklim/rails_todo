@@ -20,6 +20,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
@@ -39,6 +42,9 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
@@ -69,6 +75,9 @@ jobs:
           --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Prepare Database
         run: |
           cp config/database.yml.ci config/database.yml
@@ -90,6 +99,9 @@ jobs:
           --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
@@ -122,6 +134,9 @@ jobs:
           --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
