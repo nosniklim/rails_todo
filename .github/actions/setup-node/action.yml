@@ -19,3 +19,4 @@ runs:
     - name: Install JS deps (if any)
       if: hashFiles('yarn.lock') != ''
       run: yarn install --frozen-lockfile
+      shell: bash
