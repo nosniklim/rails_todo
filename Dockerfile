@@ -7,9 +7,9 @@ RUN apt-get update -qq && apt-get install -y curl ca-certificates gnupg
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
  && apt-get install -y nodejs
 
- # Yarn: corepack（Node18同梱）を有効化
-RUN corepack enable \
-&& corepack prepare yarn@1.22.22 --activate
+ # Yarnをインストール
+ # FIXME: 依存関係を解決するためruby2.6.3で使用していた1.22.22を指定（Rubyバージョンアップ時に見直し）
+ RUN npm i -g yarn@1.22.22
 
 # コンテナ内の作業ディレクトリを割り当て
 WORKDIR /app
