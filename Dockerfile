@@ -7,6 +7,10 @@ RUN apt-get update -qq && apt-get install -y curl ca-certificates gnupg
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
  && apt-get install -y nodejs
 
+ # Yarn: corepack（Node18同梱）を有効化
+RUN corepack enable \
+&& corepack prepare yarn@1.22.22 --activate
+
 # コンテナ内の作業ディレクトリを割り当て
 WORKDIR /app
 
