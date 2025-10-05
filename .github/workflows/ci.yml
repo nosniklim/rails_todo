@@ -24,7 +24,7 @@ jobs:
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
-          ruby_version: 2.6.3
+          ruby_version: 2.6.10
 
       - name: RuboCop
         run: |
@@ -45,7 +45,7 @@ jobs:
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
-          ruby_version: 2.6.3
+          ruby_version: 2.6.10
 
       # SAST
       - name: Brakeman  # 警告レベル2以上（Medium）
@@ -68,7 +68,7 @@ jobs:
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
-          ruby_version: 2.6.3
+          ruby_version: 2.6.10
 
       - name: Set up Node/Yarn
         uses: ./.github/actions/setup-node
@@ -110,7 +110,7 @@ jobs:
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
-          ruby_version: 2.6.3
+          ruby_version: 2.6.10
 
       - name: Set up Node/Yarn
         uses: ./.github/actions/setup-node
