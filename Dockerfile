@@ -1,4 +1,4 @@
-FROM ruby:2.6.3
+FROM ruby:2.6-bullseye
 
 # ビルド時に必要なツールをインストール（curl, gnupg, ca-certificates）
 RUN apt-get update -qq && apt-get install -y curl ca-certificates gnupg
