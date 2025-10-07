@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     # 全てのブランチでCIを走らせたい場合はbranchesを削除
-    branches: [ main, develop, "feature/**", "refactor/**" ]
+    branches: [main, develop, 'feature/**', 'refactor/**']
   pull_request:
 
 env:
@@ -57,7 +57,7 @@ jobs:
           ruby_version: 2.6.10
 
       # SAST
-      - name: Brakeman  # 警告レベル2以上（Medium）
+      - name: Brakeman # 警告レベル2以上（Medium）
         run: bundle exec brakeman -q -w2 || true
 
       - name: Bundler Audit
@@ -81,7 +81,7 @@ jobs:
         uses: ./.github/actions/setup-node
         with:
           node_version: 20
-      
+
       # Check routes and boot
       - name: Smoke (routes & boot)
         run: |
@@ -100,7 +100,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
           MYSQL_DATABASE: ${{ env.DB_NAME_TEST }}
-        ports: ["3306:3306"]
+        ports: ['3306:3306']
         options: >-
           --health-cmd="mysqladmin ping -p$$MYSQL_ROOT_PASSWORD"
           --health-interval=10s --health-timeout=5s --health-retries=10

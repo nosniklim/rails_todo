@@ -26,7 +26,8 @@
           margin: 0;
         }
         &_action {
-          .fa-pen, .fa-trash {
+          .fa-pen,
+          .fa-trash {
             font-size: 18px;
             color: #8c8c8c;
           }
@@ -41,8 +42,10 @@
         max-height: 76vh;
         width: 100%;
         -ms-overflow-style: none; // IE, Edge
-        scrollbar-width: none;    // Firefox
-        &::-webkit-scrollbar { display:none; } // Chrome, Safari
+        scrollbar-width: none; // Firefox
+        &::-webkit-scrollbar {
+          display: none;
+        } // Chrome, Safari
 
         .cardDetail_link {
           text-decoration: none;

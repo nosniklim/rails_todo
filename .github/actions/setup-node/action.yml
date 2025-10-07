@@ -2,11 +2,11 @@ name: Node Setup
 
 inputs:
   node_version:
-      description: "The Node.js version to use"
-      required: true
+    description: 'The Node.js version to use'
+    required: true
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     # Set up Node.js and Yarn
     - name: Set up Node/Yarn

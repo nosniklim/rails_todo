@@ -7,7 +7,10 @@
         font-size: 22px;
       }
     }
-    &_title, &_memo, &_list, &_position {
+    &_title,
+    &_memo,
+    &_list,
+    &_position {
       border-bottom: 1px solid #ccc;
       margin-bottom: 30px;
     }
@@ -24,10 +27,10 @@
           padding: 7px;
           border-radius: 0.25rem;
           color: #fff;
-          transition: opacity .5s;
+          transition: opacity 0.5s;
           text-decoration: none;
           &:hover {
-            opacity: .7;
+            opacity: 0.7;
           }
         }
 

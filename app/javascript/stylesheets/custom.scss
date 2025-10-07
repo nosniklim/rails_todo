@@ -15,7 +15,7 @@ body {
   & ul {
     margin: 0 auto 1.5rem auto;
     max-width: 500px;
-    & li{
+    & li {
       text-align: left;
     }
   }
@@ -55,8 +55,8 @@ body {
         align-items: center;
         .listNew {
           &:after {
-            font-family: "Font Awesome 5 Free";
-            content: "\f044";
+            font-family: 'Font Awesome 5 Free';
+            content: '\f044';
             display: inline-block;
             margin-left: 10px;
             font-size: 20px;
@@ -76,10 +76,10 @@ body {
   margin-top: 20px;
   padding: 10px;
   border-radius: 0.25rem;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
   cursor: pointer;
   &:hover {
-    opacity: .6;
+    opacity: 0.6;
   }
 }
 
@@ -88,7 +88,9 @@ body {
   margin-top: 10vh;
   .titleArea {
     text-align: center;
-    h1 {font-size: 2rem;}
+    h1 {
+      font-size: 2rem;
+    }
   }
   .signupForm {
     .form-group {
@@ -106,9 +108,9 @@ body {
     margin-top: 20px;
     padding: 10px;
     border-radius: 0.25rem;
-    transition: opacity .5s;
+    transition: opacity 0.5s;
     &:hover {
-      opacity: .6;
+      opacity: 0.6;
     }
   }
 }
@@ -146,10 +148,10 @@ body {
     border: none;
     margin-top: 20px;
     opacity: 1;
-    transition: opacity .5s;
+    transition: opacity 0.5s;
     cursor: pointer;
     &:hover {
-      opacity: .7;
+      opacity: 0.7;
     }
   }
 }

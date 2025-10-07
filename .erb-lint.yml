@@ -6,4 +6,4 @@ linters:
     config_file: .rubocop.yml
 
 exclude:
-  - "vendor/**/*"
+  - 'vendor/**/*'
