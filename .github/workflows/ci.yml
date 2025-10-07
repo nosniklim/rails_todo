@@ -33,6 +33,17 @@ jobs:
         if: hashFiles('**/*.erb') != ''
         run: bundle exec erblint --lint-all --format compact
 
+      - name: ESLint
+        if: ${{ hashFiles('app/javascript/**/*.{js,jsx}') != '' }}
+        run: yarn lint:js
+
+      - name: Stylelint
+        if: ${{ hashFiles('app/assets/stylesheets/**/*.css') != '' }}
+        run: yarn lint:css
+
+      - name: Prettier (check only)
+        run: yarn fmt:check
+
   # ---- Security ----
   security:
     runs-on: ubuntu-latest
