@@ -32,6 +32,7 @@
   "scripts": {
     "lint:js": "eslint 'app/javascript/**/*.{js,jsx}' --max-warnings=0",
     "lint:css": "stylelint 'app/assets/stylesheets/**/*.css'",
+    "lint:css:fix": "stylelint '**/*.{css,scss}' --fix",
     "fmt:check": "prettier --check '**/*.{js,jsx,json,md,css,scss,html,yml,yaml}'",
     "fmt:write": "prettier --write '**/*.{js,jsx,json,md,css,scss,html,yml,yaml}'"
   }
