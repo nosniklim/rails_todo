@@ -27,13 +27,11 @@ jobs:
           ruby_version: 2.6.10
 
       - name: RuboCop
-        run: |
-          bundle exec rubocop --format progress
+        run: bundle exec rubocop --format progress
 
       - name: ERB Lint
         if: hashFiles('**/*.erb') != ''
-        run: |
-          bundle exec erblint --lint-all --format compact
+        run: bundle exec erblint --lint-all --format compact
 
   # ---- Security ----
   security:
@@ -49,12 +47,10 @@ jobs:
 
       # SAST
       - name: Brakeman  # 警告レベル2以上（Medium）
-        run: |
-          bundle exec brakeman -q -w2 || true
+        run: bundle exec brakeman -q -w2 || true
 
       - name: Bundler Audit
-        run: |
-          bundle exec bundler-audit check --update || true
+        run: bundle exec bundler-audit check --update || true
 
   # ---- Smoke Tests ----
   smoke:
