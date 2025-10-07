@@ -3,8 +3,8 @@ FROM ruby:2.6-bullseye
 # ビルド時に必要なツールをインストール（curl, gnupg, ca-certificates）
 RUN apt-get update -qq && apt-get install -y curl ca-certificates gnupg
 
-# Node 18 を NodeSource からインストール
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+# Node 20 を NodeSource からインストール
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
  && apt-get install -y nodejs
 
  # Yarnをインストール

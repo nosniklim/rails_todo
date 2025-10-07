@@ -73,7 +73,7 @@ jobs:
       - name: Set up Node/Yarn
         uses: ./.github/actions/setup-node
         with:
-          node_version: 18
+          node_version: 20
       
       # Check routes and boot
       - name: Smoke (routes & boot)
@@ -115,7 +115,7 @@ jobs:
       - name: Set up Node/Yarn
         uses: ./.github/actions/setup-node
         with:
-          node_version: 18
+          node_version: 20
 
       - name: Wait for MySQL (port open)
         run: |
