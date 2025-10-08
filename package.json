@@ -27,10 +27,10 @@
     "postcss": "^8.4.38",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.6.2",
-    "stylelint": "^16",
+    "stylelint": "^16.25.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard": "^39.0.1",
-    "stylelint-config-standard-scss": "^13",
+    "stylelint-config-standard-scss": "^16.0.0",
     "stylelint-order": "^6",
     "stylelint-scss": "^6",
     "webpack-dev-server": "^3.11.2"
