@@ -1,8 +1,10 @@
 import eslintPluginImport from "eslint-plugin-import";
 import eslintPluginPrettier from "eslint-plugin-prettier";
 import eslintPluginUnusedImports from "eslint-plugin-unused-imports";
+import eslintRecommended from "@eslint/js";
 
 export default [
+  eslintRecommended.configs.recommended,
   {
     ignores: [
       "node_modules/",
@@ -28,12 +30,8 @@ export default [
     },
     rules: {
       "no-console": "warn",
-      "unused-imports/no-unused-imports": "error"
-    },
-    extends: [
-      "eslint:recommended",
-      "plugin:import/recommended",
-      "plugin:prettier/recommended"
-    ]
+      "unused-imports/no-unused-imports": "error",
+      "prettier/prettier": "error"
+    }
   }
 ];
