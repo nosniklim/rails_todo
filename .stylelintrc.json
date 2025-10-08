@@ -11,7 +11,7 @@
   "rules": {
     "@stylistic/indentation": 2,
     "@stylistic/linebreaks": "unix",
-    "order/properties-order": [],
-    "selector-class-pattern": null
+    "selector-class-pattern": null,
+    "order/properties-order": []
   }
 }
