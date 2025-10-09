@@ -25,12 +25,12 @@
         display: block;
 
         &.edit_btn {
-          max-width: 200px;
-          margin: 0 auto;
-          background: #007bff;
           padding: 7px;
-          border-radius: 0.25rem;
+          margin: 0 auto;
           color: #fff;
+          background: #007bff;
+          max-width: 200px;
+          border-radius: 0.25rem;
           transition: opacity 0.5s;
           text-decoration: none;
 

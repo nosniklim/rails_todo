@@ -25,18 +25,18 @@ body {
 
 // header
 .header {
-  background: #026aa7;
   padding: 10px;
+  background: #026aa7;
 
   .nav {
     .header_menu {
-      display: flex;
-      width: 100%;
       position: relative;
-      margin: 0;
-      padding: 0;
-      justify-content: space-between;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0;
+      margin: 0;
 
       li {
         list-style: none;
@@ -49,22 +49,22 @@ body {
 
       &_title {
         position: absolute;
-        left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        left: 50%;
         font-size: 25px;
         font-weight: bold;
+        transform: translate(-50%, -50%);
       }
 
       &_inner {
         display: flex;
-        padding: 0;
         align-items: center;
+        padding: 0;
 
         .listNew {
           &::after {
-            font-family: 'Font Awesome 5 Free';
-            content: '\f044';
+            font-family: "Font Awesome 5 Free";
+            content: "\f044";
             display: inline-block;
             margin-left: 10px;
             font-size: 20px;
@@ -77,12 +77,12 @@ body {
 
 // button
 .submitBtn {
-  background: #29b744;
-  color: #fff;
   width: 200px;
+  padding: 10px;
+  color: #fff;
+  background: #29b744;
   border: none;
   margin-top: 20px;
-  padding: 10px;
   border-radius: 0.25rem;
   transition: opacity 0.5s;
   cursor: pointer;
@@ -116,11 +116,11 @@ body {
   }
 
   .submitBtn {
-    background: #29b744;
-    color: #fff;
     width: 200px;
-    margin-top: 20px;
     padding: 10px;
+    color: #fff;
+    background: #29b744;
+    margin-top: 20px;
     border-radius: 0.25rem;
     transition: opacity 0.5s;
 
@@ -158,13 +158,13 @@ body {
   }
 
   .loginBtn {
-    padding: 12px;
     width: 200px;
-    border-radius: 0.25rem;
-    background: #29b744;
+    padding: 12px;
     color: #fff;
-    text-align: center;
+    background: #29b744;
     border: none;
+    border-radius: 0.25rem;
+    text-align: center;
     margin-top: 20px;
     opacity: 1;
     transition: opacity 0.5s;
