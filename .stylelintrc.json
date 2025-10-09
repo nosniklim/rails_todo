@@ -1,10 +1,10 @@
 {
   "customSyntax": "postcss-scss",
-  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier"],
-  "plugins": ["stylelint-order"],
+  "extends": ["@stylistic/stylelint-config", "stylelint-config-recommended-scss", "stylelint-config-prettier"],
+  "plugins": ["@stylistic/stylelint-plugin", "stylelint-order"],
   "rules": {
-    "indentation": 2,
-    "linebreaks": "unix",
+    "@stylistic/indentation": 2,
+    "@stylistic/linebreaks": "unix",
     "selector-class-pattern": "^[a-z][a-z0-9\\-]*$",
     "order/properties-order": null
   }
