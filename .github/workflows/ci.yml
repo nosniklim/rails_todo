@@ -26,6 +26,11 @@ jobs:
         with:
           ruby_version: 2.6.10
 
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 20
+
       - name: RuboCop
         run: bundle exec rubocop --format progress
 
