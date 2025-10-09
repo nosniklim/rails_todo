@@ -10,7 +10,7 @@ export default [
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: 'module',
-      globals: {
+      env: {
         browser: true,
         node: true,
       },
