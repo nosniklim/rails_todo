@@ -5,8 +5,9 @@
 # below each fixture, per the syntax in the comments below
 #
 user_1: {
-  id: 1,
-  email: 'aa@test.com',
-  encrypted_password: <%= User.new.send(:password_digest, '123456') %>,
-  name: 'AA'
-}
+    id: 1,
+    email: 'aa@test.com',
+    # NOTE: <%= User.new.send(:password_digest, '123456') %> としていたが、lintで検知されてしまうため事前に生成した固定値を代用
+    encrypted_password: '$2a$12$d0iOlHt4H6bhc/d8pPvOLehJLUEc2JcaC410TjrHgOEBoz5eJS8me',
+    name: 'AA',
+  }

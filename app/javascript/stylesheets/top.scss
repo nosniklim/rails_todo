@@ -3,34 +3,42 @@
   padding-top: 30px;
   background: #bababa;
   overflow-x: scroll;
+
   .listWrapper {
     display: flex;
-    height: 100%;
     align-items: baseline;
+    height: 100%;
+
     .list {
       position: relative;
-      background: #e2e4e6;
       padding: 10px;
+      background: #e2e4e6;
       margin-left: 20px;
       min-width: 250px;
+
       &:last-child {
         margin-right: 20px;
       }
+
       &_header {
         margin-bottom: 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         &_title {
-          font-size: 20px;
           margin: 0;
+          font-size: 20px;
         }
+
         &_action {
-          .fa-pen, .fa-trash {
+          .fa-pen,
+          .fa-trash {
             font-size: 18px;
             color: #8c8c8c;
           }
         }
+
         .fa-trash {
           margin-right: 10px;
         }
@@ -41,8 +49,10 @@
         max-height: 76vh;
         width: 100%;
         -ms-overflow-style: none; // IE, Edge
-        scrollbar-width: none;    // Firefox
-        &::-webkit-scrollbar { display:none; } // Chrome, Safari
+        scrollbar-width: none; // Firefox
+        &::-webkit-scrollbar {
+          display: none;
+        } // Chrome, Safari
 
         .cardDetail_link {
           text-decoration: none;
@@ -52,14 +62,18 @@
         .card {
           margin-bottom: 10px;
           padding: 10px;
+
           &_title {
             font-size: 17px;
           }
+
           &_detail {
             display: none;
+
             &.is-exist {
               display: block;
               color: #999;
+
               & > i {
                 display: block;
               }
@@ -69,6 +83,7 @@
 
         .addCard {
           color: #8c8c8c;
+
           &_link {
             color: #8c8c8c;
           }

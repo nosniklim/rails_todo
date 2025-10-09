@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     # 全てのブランチでCIを走らせたい場合はbranchesを削除
-    branches: [ main, develop, "feature/**", "refactor/**" ]
+    branches: [main, develop, 'feature/**', 'refactor/**']
   pull_request:
 
 env:
@@ -26,14 +26,28 @@ jobs:
         with:
           ruby_version: 2.6.10
 
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 20
+
       - name: RuboCop
-        run: |
-          bundle exec rubocop --format progress
+        run: bundle exec rubocop --format progress
 
       - name: ERB Lint
         if: hashFiles('**/*.erb') != ''
-        run: |
-          bundle exec erblint --lint-all --format compact
+        run: bundle exec erblint --lint-all --format compact
+
+      - name: ESLint
+        if: ${{ hashFiles('app/javascript/**/*.{js,jsx}') != '' }}
+        run: yarn lint:js
+
+      - name: Stylelint
+        if: ${{ hashFiles('app/assets/stylesheets/**/*.css') != '' }}
+        run: yarn lint:css || true
+
+      - name: Prettier (check only)
+        run: yarn fmt:check
 
   # ---- Security ----
   security:
@@ -48,13 +62,11 @@ jobs:
           ruby_version: 2.6.10
 
       # SAST
-      - name: Brakeman  # 警告レベル2以上（Medium）
-        run: |
-          bundle exec brakeman -q -w2 || true
+      - name: Brakeman # 警告レベル2以上（Medium）
+        run: bundle exec brakeman -q -w2 || true
 
       - name: Bundler Audit
-        run: |
-          bundle exec bundler-audit check --update || true
+        run: bundle exec bundler-audit check --update || true
 
   # ---- Smoke Tests ----
   smoke:
@@ -74,7 +86,7 @@ jobs:
         uses: ./.github/actions/setup-node
         with:
           node_version: 20
-      
+
       # Check routes and boot
       - name: Smoke (routes & boot)
         run: |
@@ -93,7 +105,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
           MYSQL_DATABASE: ${{ env.DB_NAME_TEST }}
-        ports: ["3306:3306"]
+        ports: ['3306:3306']
         options: >-
           --health-cmd="mysqladmin ping -p$$MYSQL_ROOT_PASSWORD"
           --health-interval=10s --health-timeout=5s --health-retries=10
