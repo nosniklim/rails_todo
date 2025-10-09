@@ -6,6 +6,28 @@
     "@stylistic/indentation": 2,
     "@stylistic/linebreaks": "unix",
     "selector-class-pattern": "^[a-z][a-z0-9\\-]*$",
-    "order/properties-order": null
+    "order/properties-order": [
+      {
+        "properties": [
+          "position",
+          "top",
+          "right",
+          "bottom",
+          "left",
+          "display",
+          "align-items",
+          "justify-content",
+          "width",
+          "height",
+          "padding",
+          "margin",
+          "font-size",
+          "font-weight",
+          "color",
+          "background",
+          "border"
+        ]
+      }
+    ]
   }
 }
