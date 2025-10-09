@@ -10,9 +10,12 @@ export default [
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: 'module',
-      env: {
-        browser: true,
-        node: true,
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+        require: 'readonly',
       },
     },
     plugins: {
