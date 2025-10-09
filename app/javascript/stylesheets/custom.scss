@@ -12,9 +12,11 @@ body {
   text-align: center;
   width: 100%;
   color: red;
+
   & ul {
-    margin: 0 auto 1.5rem auto;
+    margin: 0 auto 1.5rem;
     max-width: 500px;
+
     & li {
       text-align: left;
     }
@@ -25,6 +27,7 @@ body {
 .header {
   background: #026aa7;
   padding: 10px;
+
   .nav {
     .header_menu {
       display: flex;
@@ -34,13 +37,16 @@ body {
       padding: 0;
       justify-content: space-between;
       align-items: center;
+
       li {
         list-style: none;
         color: #fff;
+
         a {
           color: #fff;
         }
       }
+
       &_title {
         position: absolute;
         left: 50%;
@@ -49,12 +55,14 @@ body {
         font-size: 25px;
         font-weight: bold;
       }
+
       &_inner {
         display: flex;
         padding: 0;
         align-items: center;
+
         .listNew {
-          &:after {
+          &::after {
             font-family: 'Font Awesome 5 Free';
             content: '\f044';
             display: inline-block;
@@ -78,6 +86,7 @@ body {
   border-radius: 0.25rem;
   transition: opacity 0.5s;
   cursor: pointer;
+
   &:hover {
     opacity: 0.6;
   }
@@ -86,21 +95,26 @@ body {
 // sign_up
 .sinupPage {
   margin-top: 10vh;
+
   .titleArea {
     text-align: center;
+
     h1 {
       font-size: 2rem;
     }
   }
+
   .signupForm {
     .form-group {
-      margin: 0 auto 1.5rem auto;
+      margin: 0 auto 1.5rem;
       max-width: 500px;
+
       .form-control {
         background: #f6f8fa;
       }
     }
   }
+
   .submitBtn {
     background: #29b744;
     color: #fff;
@@ -109,6 +123,7 @@ body {
     padding: 10px;
     border-radius: 0.25rem;
     transition: opacity 0.5s;
+
     &:hover {
       opacity: 0.6;
     }
@@ -125,19 +140,23 @@ body {
 // sign_in
 .signinPage {
   margin-top: 10vh;
+
   .title {
     margin: 0;
     text-align: center;
   }
+
   .new_user {
     .form-group {
       max-width: 500px;
       margin: 0 auto 1rem;
+
       .form-control {
         background: #f6f8fa;
       }
     }
   }
+
   .loginBtn {
     padding: 12px;
     width: 200px;
@@ -150,6 +169,7 @@ body {
     opacity: 1;
     transition: opacity 0.5s;
     cursor: pointer;
+
     &:hover {
       opacity: 0.7;
     }
