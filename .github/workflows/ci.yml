@@ -114,6 +114,8 @@ jobs:
       # 外部DBの参照を防止するためenvをオーバーライド
       DB_HOST: 127.0.0.1
       RAILS_ENV: test
+      # カバレッジ計測
+      COVERAGE: "1"
 
     steps:
       - name: Checkout
@@ -151,3 +153,10 @@ jobs:
         env:
           DISABLE_SPRING: 1 # CIでは必要ないので無効化
         run: bin/rails test
+      
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: coverage/html
