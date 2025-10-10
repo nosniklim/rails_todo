@@ -34,6 +34,7 @@ group :development, :test do
 
   # Testing
   gem 'rspec-rails'
+  gem 'bullet'
 end
 
 group :development do
