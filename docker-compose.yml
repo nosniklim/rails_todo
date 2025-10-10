@@ -32,4 +32,4 @@ services:
       - db
     # 環境変数
     environment:
-      DATABASE_URL: mysql2://user:password@db:3306/myapp_development
+      DATABASE_URL: mysql2://user:password@db:3306/myapp_${RAILS_ENV:-development}
