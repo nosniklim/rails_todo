@@ -162,6 +162,11 @@ jobs:
           path: coverage
 
       - name: Show coverage rate
+        if: always()
         run: |
-          rate=$(jq -r '.result.line' coverage/.last_run.json)
-          echo "::notice ::Coverage: ${rate}%"
+          if [ -f coverage/.last_run.json ]; then
+            rate=$(jq -r '.result.line' coverage/.last_run.json)
+            echo "::notice ::Coverage: ${pct}%"
+          else
+            echo "::warning ::No coverage result found"
+          fi
