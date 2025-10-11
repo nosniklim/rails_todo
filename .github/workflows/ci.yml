@@ -166,7 +166,7 @@ jobs:
         run: |
           if [ -f coverage/.last_run.json ]; then
             rate=$(jq -r '.result.line' coverage/.last_run.json)
-            echo "::notice ::Coverage: ${pct}%"
+            echo "::notice ::Coverage: ${rate}%"
           else
             echo "::warning ::No coverage result found"
           fi
