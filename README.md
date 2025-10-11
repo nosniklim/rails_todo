@@ -15,9 +15,11 @@ ToDoリスト管理ツール
 
 ### 品質保証・開発支援ツール
 
-- 静的解析: RuboCop、ERB Lint
+- 静的解析: RuboCop、ERB Lint、ESLint、Stylelint、Prettier
 - セキュリティチェック: Bundler Audit、Brakeman
 - テスト: RSpec（一部Unitテストは Minitest）
+- カバレッジ計測: SimpleCov
+- N+1クエリ検知: Bullet
 - CI: GitHub Actions
 
 ## 機能一覧
