@@ -160,3 +160,8 @@ jobs:
         with:
           name: coverage-html
           path: coverage
+
+      - name: Show coverage rate
+        run: |
+          rate=$(jq -r '.result.line' coverage/.last_run.json)
+          echo "::notice ::Coverage: ${rate}%"
