@@ -39,6 +39,8 @@ Metrics/AbcSize:
 # IgnoredMethods: refine
 Metrics/BlockLength:
   Max: 26
+  Exclude:
+    - 'config/environments/development.rb'
 
 # Offense count: 2
 # Configuration parameters: CountBlocks.
