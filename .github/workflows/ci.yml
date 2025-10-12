@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  pull_request:
+    # 全てのブランチでCIを走らせたい場合はbranchesを削除
+    branches: [main, develop, 'feature/**', 'refactor/**']
+  push:
+    branches: [main, develop]
+
+env:
+  RAILS_ENV: test
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
+
+jobs:
+  # ---- Lint ----
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.10
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 20
+
+      - name: RuboCop
+        run: bundle exec rubocop --format progress
+
+      - name: ERB Lint
+        if: hashFiles('**/*.erb') != ''
+        run: bundle exec erblint --lint-all --format compact
+
+      - name: ESLint
+        if: ${{ hashFiles('app/javascript/**/*.{js,jsx}') != '' }}
+        run: yarn lint:js
+
+      - name: Stylelint
+        if: ${{ hashFiles('app/assets/stylesheets/**/*.css') != '' }}
+        run: yarn lint:css || true
+
+      - name: Prettier (check only)
+        run: yarn fmt:check
+
+  # ---- Security ----
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.10
+
+      # SAST
+      - name: Brakeman # 警告レベル2以上（Medium）
+        run: bundle exec brakeman -q -w2 || true
+
+      - name: Bundler Audit
+        run: bundle exec bundler-audit check --update || true
+
+  # ---- Smoke Tests ----
+  smoke:
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.10
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 20
+
+      # Check routes and boot
+      - name: Smoke (routes & boot)
+        run: |
+          bin/rails routes >/dev/null
+          bin/rails runner 'puts "Boot OK"'
+
+  # ---- Tests ----
+  tests:
+    runs-on: ubuntu-latest
+    environment: rails_todo
+    timeout-minutes: 15
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.DB_NAME_TEST }}
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="mysqladmin ping -p$$MYSQL_ROOT_PASSWORD"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+
+    env:
+      # 外部DBの参照を防止するためenvをオーバーライド
+      DB_HOST: 127.0.0.1
+      RAILS_ENV: test
+      # カバレッジ計測
+      COVERAGE: '1'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ./.github/actions/setup-ruby
+        with:
+          ruby_version: 2.6.10
+
+      - name: Set up Node/Yarn
+        uses: ./.github/actions/setup-node
+        with:
+          node_version: 20
+
+      - name: Wait for MySQL (port open)
+        run: |
+          for i in {1..30}; do
+            (echo > /dev/tcp/${DB_HOST}/3306) >/dev/null 2>&1 && break
+            echo "Waiting for MySQL on ${DB_HOST}:3306..."
+            sleep 2
+          done
+
+      - name: Prepare Database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:prepare
+
+      - name: Run RSpec
+        if: ${{ hashFiles('spec/**/*') != '' }}
+        run: bundle exec rspec --format progress --force-color
+
+      - name: Run Minitest
+        if: ${{ hashFiles('test/**/*') != '' }}
+        env:
+          DISABLE_SPRING: 1 # CIでは必要ないので無効化
+        run: bin/rails test
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: coverage
+
+      - name: Show coverage rate
+        if: always()
+        run: |
+          if [ -f coverage/.last_run.json ]; then
+            rate=$(jq -r '.result.line' coverage/.last_run.json)
+            echo "::notice ::Coverage: ${rate}%"
+          else
+            echo "::warning ::No coverage result found"
+          fi

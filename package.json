@@ -16,7 +16,33 @@
     "webpack-cli": "^3.3.12"
   },
   "version": "0.1.0",
+  "type": "module",
   "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "@stylistic/stylelint-config": "^3",
+    "@stylistic/stylelint-plugin": "^3",
+    "eslint": "^9.37.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "postcss": "^8.4.38",
+    "postcss-scss": "^4",
+    "prettier": "^3.6.2",
+    "stylelint": "^16",
+    "stylelint-config-recommended-scss": "^14",
+    "stylelint-config-standard": "^39.0.1",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-order": "^6",
+    "stylelint-scss": "^6",
     "webpack-dev-server": "^3.11.2"
+  },
+  "scripts": {
+    "lint:js": "eslint 'app/javascript/**/*.{js,jsx,ts,tsx}' --max-warnings=0",
+    "lint:js:fix": "eslint 'app/javascript/**/*.{js,jsx,ts,tsx}' --fix",
+    "lint:css": "stylelint 'app/{assets,javascript}/stylesheets/**/*.{css,scss}'",
+    "lint:css:fix": "stylelint 'app/{assets,javascript}/stylesheets/**/*.{css,scss}' --fix",
+    "fmt:check": "prettier --check '**/*.{js,jsx,json,md,css,scss,html,yml,yaml}'",
+    "fmt:check:fix": "prettier --write '**/*.{js,jsx,json,md,css,scss,html,yml,yaml}'"
   }
 }

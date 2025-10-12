@@ -63,6 +63,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+
+  # Bullet
+  config.before(:each) { Bullet.start_request if defined?(Bullet) }
+  config.after(:each)  { Bullet.end_request   if defined?(Bullet) }
 end
 
 Shoulda::Matchers.configure do |config|

@@ -6,7 +6,6 @@ services:
     # 環境変数
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     # ホストマシンとコンテナ間のファイル共有
@@ -14,7 +13,7 @@ services:
       - ./tmp/db:/var/lib/mysql
     # ホストマシンとコンテナ間で使用するポートのマッピング
     ports:
-      - "3306:3306"
+      - '3306:3306'
 
   app:
     # Dockerfileからイメージをビルド
@@ -23,13 +22,16 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     # ホストマシンとコンテナ間のファイル共有
     volumes:
-      - ".:/app"
+      - '.:/app'
     # ホストマシンとコンテナ間で使用するポートのマッピング
     ports:
-      - "3000:3000"
+      - '3000:3000'
     # サービスの依存関係と起動順
     depends_on:
       - db
-    # 環境変数
     environment:
-      DATABASE_URL: mysql2://user:password@db:3306/myapp_development
+      # 接続情報を環境変数にセット（接続先はdatabase.yml）
+      MYSQL_USER: ${MYSQL_USER}
+      # FIXME: MYSQL_ROOT_PASSWORDを使わないと何故かdbに接続できない
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

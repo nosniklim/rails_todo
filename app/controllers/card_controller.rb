@@ -5,7 +5,7 @@ class CardController < ApplicationController
 
   def edit
     @lists = List.where(user: current_user).select(:id, :title)
-    @positions = Card.where(list_id: @card.list_id).select('position as key, position as value').order(:position)
+    @positions = Card.where(list_id: @card.list_id).select('position as `key`, position as value').order(:position)
   end
 
   def update

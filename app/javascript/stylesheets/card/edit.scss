@@ -2,7 +2,11 @@
   .cardeditForm {
     max-width: 500px;
     margin: 70px auto 0;
-    &_title, &_memo, &_list, &_position {
+
+    &_title,
+    &_memo,
+    &_list,
+    &_position {
       margin-bottom: 30px;
     }
   }
