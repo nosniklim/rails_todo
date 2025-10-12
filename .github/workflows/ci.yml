@@ -1,10 +1,9 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     # 全てのブランチでCIを走らせたい場合はbranchesを削除
     branches: [main, develop, 'feature/**', 'refactor/**']
-  pull_request:
 
 env:
   RAILS_ENV: test
