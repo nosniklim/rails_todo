@@ -32,4 +32,6 @@ services:
     environment:
       # 接続情報を環境変数にセット（接続先はdatabase.yml）
       MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      # FIXME: MYSQL_ROOT_PASSWORDを使わないと何故かdbに接続できない
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
