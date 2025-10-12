@@ -6,7 +6,6 @@ services:
     # 環境変数
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     # ホストマシンとコンテナ間のファイル共有
@@ -30,6 +29,3 @@ services:
     # サービスの依存関係と起動順
     depends_on:
       - db
-    # 環境変数
-    environment:
-      DATABASE_URL: mysql2://user:password@db:3306/myapp_${RAILS_ENV:-development}
