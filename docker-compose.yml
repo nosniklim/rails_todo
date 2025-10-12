@@ -29,3 +29,7 @@ services:
     # サービスの依存関係と起動順
     depends_on:
       - db
+    environment:
+      # 接続情報を環境変数にセット（接続先はdatabase.yml）
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
