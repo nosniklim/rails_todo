@@ -6,7 +6,6 @@ RSpec.describe Card, type: :model do
     it { is_expected.to belong_to(:list) }
   end
   describe 'validations' do
-
     it { is_expected.to validate_length_of(:title).is_at_least(1).is_at_most(255) }
     it { is_expected.to validate_length_of(:memo).is_at_most(1000) }
   end
