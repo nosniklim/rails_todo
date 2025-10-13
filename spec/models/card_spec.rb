@@ -11,9 +11,8 @@ RSpec.describe Card, type: :model do
   end
   describe 'instance methods' do
     describe '#save' do
-      # FIXME: require FactoryBot
-      # subject { described_instance.save }
-      it { is_expected.to be_truthy }
+      subject { described_instance.save }
+      it { byebug;is_expected.to be_truthy }
     end
   end
 end
