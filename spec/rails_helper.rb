@@ -64,6 +64,7 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Rails::Controller::Testing::TemplateAssertions, type: :request
 
   # Bullet
   config.before(:each) { Bullet.start_request if defined?(Bullet) }
