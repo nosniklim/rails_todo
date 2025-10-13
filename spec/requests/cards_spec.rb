@@ -36,7 +36,7 @@ RSpec.describe 'Cards', type: :request do
     context '無効なパラメータの場合' do
       let(:invalid_params) { { card: { title: '' } } }
 
-      it 'カードを更新せず、edit テンプレートを再表示する' do
+      it 'カードを更新せず、編集画面を再表示する' do
         pending 'FIXME: 更新失敗時に編集画面を再描画するようにする'
         patch list_card_path(list_id: list.id, id: card.id), params: invalid_params
         expect(card.reload.title).not_to eq('')
@@ -67,7 +67,7 @@ RSpec.describe 'Cards', type: :request do
     context '無効なパラメータの場合' do
       let(:invalid_params) { { card: { title: '', list_id: list.id } } }
 
-      it 'カードを作成せず、new テンプレートを再表示する' do
+      it 'カードを作成せず、新規作成画面を再表示する' do
         pending 'FIXME: 作成失敗時にNilClassのカラムを参照しないようにする'
         expect do
           post list_card_index_path(list_id: list.id), params: invalid_params

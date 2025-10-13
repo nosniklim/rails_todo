@@ -28,7 +28,7 @@ RSpec.describe 'Lists', type: :request do
     context '無効なパラメータの場合' do
       let(:invalid_params) { { list: { title: '' } } }
 
-      it 'リストを作成せず、new テンプレートを再表示する' do
+      it 'リストを作成せず、新規作成画面を再表示する' do
         expect do
           post list_index_path, params: invalid_params
         end.not_to change(List, :count)
@@ -58,7 +58,7 @@ RSpec.describe 'Lists', type: :request do
     context '無効なパラメータの場合' do
       let(:invalid_params) { { list: { title: '' } } }
 
-      it 'リストを更新せず、edit テンプレートを再表示する' do
+      it 'リストを更新せず、編集画面を再表示する' do
         pending 'FIXME: 更新失敗時に編集画面を再描画するようにする'
         patch list_path(list), params: invalid_params
         expect(list.reload.title).not_to eq('')

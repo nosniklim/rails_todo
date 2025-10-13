@@ -37,7 +37,7 @@ RSpec.describe 'Users', type: :request do
     context '無効なパラメータの場合' do
       let(:invalid_params) { { user: { name: '' } } }
 
-      it 'ユーザー情報を更新せず、edit テンプレートを再表示する' do
+      it 'ユーザー情報を更新せず、編集画面を再表示する' do
         patch user_path(user.id), params: invalid_params
         expect(user.reload.name).not_to eq('')
         expect(response).to render_template(:edit)
