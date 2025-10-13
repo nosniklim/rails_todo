@@ -12,7 +12,7 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:name).is_at_least(2).is_at_most(20) }
   end
 
-  describe 'include module' do
+  describe 'include modules' do
     it 'includes Devise' do
       expect(User.ancestors).to include(Devise::Models::DatabaseAuthenticatable)
       expect(User.ancestors).to include(Devise::Models::Registerable)
