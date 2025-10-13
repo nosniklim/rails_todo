@@ -13,7 +13,7 @@ RSpec.describe Card, type: :model do
     it { is_expected.to validate_length_of(:memo).is_at_most(1000) }
   end
 
-  describe 'include module' do
+  describe 'include modules' do
     it { is_expected.to be_a(UtilityMethods) }
   end
 
