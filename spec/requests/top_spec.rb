@@ -7,32 +7,24 @@ RSpec.describe 'Top', type: :request do
     context 'ログイン時' do
       before { sign_in user } # Devise のテストヘルパーでログイン
 
-      subject(:request!) do
-        get root_path
-        response
-      end
-
       it '200 OK を返す' do
-        expect(request!).to have_http_status(:ok)
+        get root_path
+        expect(response).to have_http_status(:ok)
       end
 
       it 'ヘッダーコンテンツが表示される' do
-        resp = request!
-        expect(resp.body).to include(user.name)
-        expect(resp.body).to include('Todolist')
-        expect(resp.body).to include('New List')
-        expect(resp.body).to include('Sign out')
+        get root_path
+        expect(response.body).to include(user.name)
+        expect(response.body).to include('Todolist')
+        expect(response.body).to include('New List')
+        expect(response.body).to include('Sign out')
       end
     end
 
     context '未ログイン時' do
-      subject(:request!) do
-        get root_path
-        response
-      end
-
       it 'ログインページへリダイレクトする' do
-        expect(request!).to have_http_status(:found)
+        get root_path
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(new_user_session_path)
       end
     end
