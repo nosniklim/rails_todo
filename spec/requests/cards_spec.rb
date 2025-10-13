@@ -56,9 +56,9 @@ RSpec.describe 'Cards', type: :request do
       let(:valid_params) { { card: { title: 'New Card', memo: 'New Memo', list_id: list.id } } }
 
       it 'カードを作成し、ルートにリダイレクトする' do
-        expect {
+        expect do
           post list_card_index_path(list_id: list.id), params: valid_params
-        }.to change(Card, :count).by(1)
+        end.to change(Card, :count).by(1)
         expect(response).to redirect_to(root_path)
       end
     end
@@ -67,9 +67,9 @@ RSpec.describe 'Cards', type: :request do
       let(:invalid_params) { { card: { title: '', list_id: list.id } } }
 
       it 'カードを作成せず、new テンプレートを再表示する' do
-        expect {
+        expect do
           post list_card_index_path(list_id: list.id), params: invalid_params
-        }.not_to change(Card, :count)
+        end.not_to change(Card, :count)
         expect(response).to render_template(:new)
       end
     end
@@ -77,9 +77,9 @@ RSpec.describe 'Cards', type: :request do
 
   describe 'DELETE /list/:list_id/card/:id' do
     it 'カードを削除し、ルートにリダイレクトする' do
-      expect {
+      expect do
         delete list_card_path(list_id: list.id, id: card.id)
-      }.to change(Card, :count).by(-1)
+      end.to change(Card, :count).by(-1)
       expect(response).to redirect_to(root_path)
     end
   end

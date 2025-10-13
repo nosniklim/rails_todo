@@ -18,9 +18,9 @@ RSpec.describe 'Lists', type: :request do
       let(:valid_params) { { list: { title: 'New List' } } }
 
       it 'リストを作成し、ルートにリダイレクトする' do
-        expect {
+        expect do
           post list_index_path, params: valid_params
-        }.to change(List, :count).by(1)
+        end.to change(List, :count).by(1)
         expect(response).to redirect_to(root_path)
       end
     end
@@ -29,9 +29,9 @@ RSpec.describe 'Lists', type: :request do
       let(:invalid_params) { { list: { title: '' } } }
 
       it 'リストを作成せず、new テンプレートを再表示する' do
-        expect {
+        expect do
           post list_index_path, params: invalid_params
-        }.not_to change(List, :count)
+        end.not_to change(List, :count)
         expect(response).to render_template(:new)
       end
     end
@@ -68,9 +68,9 @@ RSpec.describe 'Lists', type: :request do
 
   describe 'DELETE /list/:id' do
     it 'リストを削除し、ルートにリダイレクトする' do
-      expect {
+      expect do
         delete list_path(list)
-      }.to change(List, :count).by(-1)
+      end.to change(List, :count).by(-1)
       expect(response).to redirect_to(root_path)
     end
   end
