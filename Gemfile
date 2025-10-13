@@ -34,6 +34,7 @@ group :development, :test do
 
   # Testing
   gem 'rspec-rails'
+  gem 'factory_bot_rails'
   gem 'bullet'
 end
 
@@ -60,6 +61,7 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   gem 'simplecov', require: false
+  gem 'shoulda-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

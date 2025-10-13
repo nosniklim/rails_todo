@@ -112,6 +112,11 @@ GEM
       rubocop
       smart_properties
     erubi (1.10.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faker (2.19.0)
       i18n (>= 1.6, < 2)
     ffi (1.15.3)
@@ -240,6 +245,8 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
+    shoulda-matchers (5.3.0)
+      activesupport (>= 5.2.0)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -299,6 +306,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   devise
   erb_lint
+  factory_bot_rails
   faker
   jbuilder (~> 2.7)
   listen (~> 3.3)
@@ -311,6 +319,7 @@ DEPENDENCIES
   rubocop-rails
   sass-rails (>= 6)
   selenium-webdriver
+  shoulda-matchers
   simplecov
   spring
   turbolinks (~> 5)
