@@ -63,6 +63,8 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Rails::Controller::Testing::TemplateAssertions, type: :request
 
   # Bullet
   config.before(:each) { Bullet.start_request if defined?(Bullet) }
