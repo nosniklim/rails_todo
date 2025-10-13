@@ -54,6 +54,8 @@ RSpec.describe 'Cards', type: :request do
 
   describe 'POST /list/:list_id/card' do
     context '有効なパラメータの場合' do
+      # FIXME: list_idをparamsに含める必要があるか要検討
+      # let(:valid_params) { { card: { title: 'New Card', memo: 'New Memo' } } }
       let(:valid_params) { { card: { title: 'New Card', memo: 'New Memo', list_id: list.id } } }
 
       it 'カードを作成し、ルートにリダイレクトする' do
@@ -65,6 +67,8 @@ RSpec.describe 'Cards', type: :request do
     end
 
     context '無効なパラメータの場合' do
+      # FIXME: list_idをparamsに含める必要があるか要検討
+      # let(:invalid_params) { { card: { title: '' } } }
       let(:invalid_params) { { card: { title: '', list_id: list.id } } }
 
       it 'カードを作成せず、新規作成画面を再表示する' do
