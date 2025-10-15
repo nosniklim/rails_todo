@@ -2,6 +2,8 @@
 
 require 'capybara'
 
+Capybara.default_max_wait_time = 3
+
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :selenium
@@ -10,8 +12,6 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :selenium, using: :headless_chrome
   end
-
-  Capybara.default_max_wait_time = 3
 
   config.after(:each, type: :system) do |example|
     if example.exception
