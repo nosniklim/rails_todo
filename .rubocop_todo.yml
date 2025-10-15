@@ -82,6 +82,7 @@ Rails/BulkChangeTable:
 Rails/FilePath:
   Exclude:
     - 'config/environments/development.rb'
+    - 'spec/rails_helper.rb'
 
 # Offense count: 6
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
