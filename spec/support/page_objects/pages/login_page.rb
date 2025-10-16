@@ -12,5 +12,6 @@ class LoginPage
     fill_in 'Name', with: name
     fill_in 'Password', with: password
     click_button 'Log in'
+    self
   end
 end
