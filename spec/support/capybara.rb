@@ -3,14 +3,22 @@
 require 'capybara'
 
 Capybara.default_max_wait_time = 3
+Capybara.server = :puma, { Silent: true } # Pumaサーバーを使用
+
+# Seleniumの設定を登録
+Capybara.register_driver :selenium_remote_chrome do |app|
+  Capybara::Selenium::Driver.new(app,
+    browser: :remote,
+    url: "http://#{ENV.fetch('SELENIUM_HOST', 'localhost')}:4444/wd/hub",
+    capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
+      'goog:chromeOptions' => { 'args' => %w[headless disable-gpu no-sandbox disable-dev-shm-usage] }
+    )
+  )
+end
 
 RSpec.configure do |config|
   config.before(:each, type: :system) do
-    driven_by :selenium
-  end
-
-  config.before(:each, type: :system, js: true) do
-    driven_by :selenium, using: :headless_chrome
+    driven_by :selenium_remote_chrome
   end
 
   config.after(:each, type: :system) do |example|
