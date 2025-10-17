@@ -2,6 +2,7 @@
 
 class LoginPage
   include Capybara::DSL
+  include Rails.application.routes.url_helpers
 
   def visit!
     visit new_user_session_path
