@@ -10,7 +10,7 @@ Capybara.register_driver :selenium_remote_chrome do |app|
   Capybara::Selenium::Driver.new(app,
     browser: :remote,
     url: "http://#{ENV.fetch('SELENIUM_HOST', 'localhost')}:4444/wd/hub",
-    capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
+    desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
       'goog:chromeOptions' => { 'args' => %w[headless disable-gpu no-sandbox disable-dev-shm-usage] }
     )
   )
