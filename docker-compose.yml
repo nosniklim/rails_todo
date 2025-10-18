@@ -41,8 +41,6 @@ services:
       SELENIUM_HOST: selenium
       # Railsのテスト環境を指定
       RAILS_ENV: test
-      # Capybaraのスクリーンショット保存先
-      SCREENSHOT_PATH: /app/tmp/capybara
 
   selenium:
     image: selenium/standalone-chrome:3.141.59

@@ -5,6 +5,7 @@ require 'capybara'
 Capybara.default_max_wait_time = 3
 Capybara.server = :puma, { Silent: true } # Pumaサーバーを使用
 Capybara.app_host = "http://app:3000"
+Capybara.save_path = 'tmp/capybara'
 
 # Seleniumの設定を登録
 Capybara.register_driver :selenium_remote_chrome do |app|
@@ -24,10 +25,10 @@ RSpec.configure do |config|
 
   config.after(:each, type: :system) do |example|
     if example.exception
-      relative_path = "tmp/capybara/#{example.full_description.parameterize}"
-      FileUtils.mkdir_p(relative_path)
-      page.save_screenshot("#{relative_path}.png", full: true)
-      save_page("#{relative_path}.html")
+      FileUtils.mkdir_p('tmp/capybara')
+      base_path = "#{example.full_description.parameterize}"
+      page.save_screenshot("#{base_path}.png", full: true)
+      save_page("#{base_path}.html")
     end
   end
 end
