@@ -19,9 +19,8 @@ Capybara.register_driver :selenium_remote_chrome do |app|
 end
 
 RSpec.configure do |config|
-  config.before(:each, type: :system) do
-    driven_by :selenium_remote_chrome
-  end
+  config.before(:each, type: :system) { driven_by :rack_test }
+  config.before(:each, type: :system, js: true) { driven_by :selenium_remote_chrome }
 
   config.after(:each, type: :system) do |example|
     if example.exception
