@@ -26,7 +26,8 @@ RSpec.configure do |config|
   config.after(:each, type: :system) do |example|
     if example.exception
       FileUtils.mkdir_p('tmp/capybara')
-      base_path = "#{example.full_description.parameterize}"
+      timestamp = Time.now.strftime('%Y%m%d-%H%M%S')
+      base_path = "#{example.full_description.parameterize}-#{timestamp}"
       page.save_screenshot("#{base_path}.png", full: true)
       save_page("#{base_path}.html")
     end
