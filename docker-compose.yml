@@ -23,6 +23,7 @@ services:
     # ホストマシンとコンテナ間のファイル共有
     volumes:
       - '.:/app'
+      - ./tmp/capybara:/app/tmp/capybara
     # ホストマシンとコンテナ間で使用するポートのマッピング
     ports:
       - '3000:3000'
@@ -40,9 +41,11 @@ services:
       SELENIUM_HOST: selenium
       # Railsのテスト環境を指定
       RAILS_ENV: test
+      # Capybaraのスクリーンショット保存先
+      SCREENSHOT_PATH: /app/tmp/capybara
 
   selenium:
-    image: selenium/standalone-chrome:latest
+    image: selenium/standalone-chrome:3.141.59
     shm_size: 2gb
     ports:
       - '4444:4444' # Seleniumのデフォルトポート

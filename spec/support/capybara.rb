@@ -24,10 +24,10 @@ RSpec.configure do |config|
 
   config.after(:each, type: :system) do |example|
     if example.exception
-      FileUtils.mkdir_p('tmp/capybara')
-      base_path = "tmp/capybara/#{example.full_description.parameterize}"
-      page.save_screenshot("#{base_path}.png", full: true)
-      save_page("#{base_path}.html")
+      relative_path = "tmp/capybara/#{example.full_description.parameterize}"
+      FileUtils.mkdir_p(relative_path)
+      page.save_screenshot("#{relative_path}.png", full: true)
+      save_page("#{relative_path}.html")
     end
   end
 end
