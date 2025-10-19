@@ -4,6 +4,7 @@ require 'capybara/rspec'
 
 class TopPage
   include Capybara::DSL
+  include Rails.application.routes.url_helpers
 
   # トップページに戻る
   def visit!
