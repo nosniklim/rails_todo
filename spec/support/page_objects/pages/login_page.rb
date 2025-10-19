@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'capybara/rspec'
+
 class LoginPage
   include Capybara::DSL
   include Rails.application.routes.url_helpers
