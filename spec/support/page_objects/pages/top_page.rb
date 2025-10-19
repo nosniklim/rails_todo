@@ -35,7 +35,8 @@ class TopPage
   private
 
   def within_list(list_title, &block)
-    list = find(:xpath, "//div[contains(@class, 'listWrapper')][.//div[contains(@class, 'list_header_title') and normalize-space(text())='#{list_title}']]")
+    list = find(:xpath,
+                "//div[contains(@class, 'listWrapper')][.//div[contains(@class, 'list_header_title') and normalize-space(text())='#{list_title}']]")
     within(list, &block)
   end
 end
