@@ -9,7 +9,7 @@ class ListFormPage
     self
   end
 
-  def create(title:)  
+  def create(title:)
     fill_title(title)
     submit('Create')
   end
