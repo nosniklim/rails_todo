@@ -28,7 +28,7 @@ class ListFormPage
   end
 
   def select_position(position)
-    # TODO: [data-testid="select-llist-position"]
+    # TODO: [data-testid="select-list-position"]
     find('#list_position').select(position)
   end
 
