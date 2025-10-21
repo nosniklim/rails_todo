@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'capybara/rspec'
+
 class CardFormPage
   include Capybara::DSL
 
