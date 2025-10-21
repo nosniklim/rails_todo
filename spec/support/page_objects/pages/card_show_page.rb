@@ -22,7 +22,7 @@ class CardShowPage
 
   def have_position?(position)
     # TODO: [data-testid="card-position"]
-    page.has_selector?('.cardContents_position', text: text)
+    page.has_selector?('.cardContents_position', text: position)
   end
 
   def click_edit
