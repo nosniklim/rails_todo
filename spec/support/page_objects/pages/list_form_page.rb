@@ -14,9 +14,9 @@ class ListFormPage
     submit('Create')
   end
 
-  def update(title:, position:)
+  def update(title:, position: nil)
     fill_title(title)
-    select_position(position)
+    select_position(position) if position
     submit('Save')
   end
 
@@ -29,7 +29,7 @@ class ListFormPage
 
   def select_position(position)
     # TODO: [data-testid="select-list-position"]
-    find('#list_position').select(position)
+    select position, from: '#list_position'
   end
 
   def submit(button_text)
