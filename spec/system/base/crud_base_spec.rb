@@ -28,5 +28,17 @@ RSpec.describe 'CRUD base', type: :system do
     end
     ListFormPage.new.update(title: 'Done')
     expect(page).to have_content('Done')
+
+    # Remove Card
+    click_link 'Task 9'
+    find('a[data-confirm="Are you sure you want to remove this card?"]').click
+    expect(page).not_to have_content('Task 9')
+
+    # Remove List
+    # NOTE: リスト詳細ページへのリンクはテキストが表示されないためCSSセレクタを指定
+    within('.list_header', text: 'Done') do
+      find('a[data-confirm="Are you sure you want to remove \'Done\'?"]').click
+    end
+    expect(page).not_to have_content('Done')
   end
 end
