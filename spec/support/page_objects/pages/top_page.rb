@@ -40,9 +40,13 @@ class TopPage
   private
 
   def within_list(list_title, &block)
-    title = XPath.escape(list_title)
+    title = escape_xpath(list_title)
     list = find(:xpath,
                 "//div[contains(@class, 'listWrapper')][.//div[contains(@class, 'list_header_title') and normalize-space(text())='#{title}']]")
     within(list, &block)
+  end
+
+  def escape_xpath(title)
+    "'#{title.gsub("'", "''")}'"
   end
 end
