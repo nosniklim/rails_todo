@@ -20,7 +20,7 @@
 
       <div class="cardContents_btnArea">
         <%= link_to 'Edit', edit_list_card_path(@card.list, @card), class: "edit_btn" %>
-        <%= link_to 'Remove', list_card_path(@card.list, @card), class: "text-danger delete_btn", method: :delete, data: { confirm: "Are you sure you want to remove this card?'" } %>
+        <%= link_to 'Remove', list_card_path(@card.list, @card), class: "text-danger delete_btn", method: :delete, data: { confirm: "Are you sure you want to remove this card?" } %>
       </div>
     </div>
   </div>
