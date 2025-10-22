@@ -25,7 +25,7 @@ class TopPage
   def add_card_to(list_title, title:, memo: nil)
     within_list(list_title) do
       # TODO: [data-testid="link-add-card"]
-      find('.addCard', match: :first).click
+      find('.addCard_link', match: :first).click
     end
     CardFormPage.new.create(title: title, memo: memo)
   end
