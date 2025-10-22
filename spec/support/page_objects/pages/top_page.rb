@@ -50,7 +50,7 @@ class TopPage
     return "'#{str}'" unless str.include?("'")
 
     parts = str.split("'").map { |part| "'#{part}'" }
-    concat_str = parts.join(%{, "'", })
+    concat_str = parts.join(%(, "'", ))
     "concat(#{concat_str})"
   end
 end
