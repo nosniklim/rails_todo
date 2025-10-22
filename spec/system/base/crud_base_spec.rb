@@ -22,7 +22,7 @@ RSpec.describe 'CRUD base', type: :system do
     expect(page).to have_content('Task 9')
 
     # Edit List
-    # NOTE: リスト詳細ページへのリンクはテキストが表示されないためCSSセレクタで指定
+    # NOTE: リスト詳細ページへのリンクはテキストが表示されないためCSSセレクタを指定
     within('.list_header', text: 'Todo') do
       find('a[href*="/list/"][href$="/edit"]').click
     end
