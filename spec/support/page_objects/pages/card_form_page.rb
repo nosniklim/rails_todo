@@ -28,6 +28,7 @@ class CardFormPage
 
   def fill_memo(text)
     # TODO: [data-testid="input-card-memo"]
+    # NOTE: 新規作成と編集ではラベルが異なるためプレースホルダーを指定している
     fill_in placeholder: 'Write a comment...', with: text
   end
 

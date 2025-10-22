@@ -25,7 +25,7 @@ class TopPage
   def add_card_to(list_title, title:, memo: nil)
     within_list(list_title) do
       # TODO: [data-testid="link-add-card"]
-      find('.addCard', match: :first).click
+      find('.addCard_link', match: :first).click
     end
     CardFormPage.new.create(title: title, memo: memo)
   end
@@ -40,9 +40,17 @@ class TopPage
   private
 
   def within_list(list_title, &block)
-    title = XPath.escape(list_title)
+    title = escape_xpath(list_title)
     list = find(:xpath,
-                "//div[contains(@class, 'listWrapper')][.//div[contains(@class, 'list_header_title') and normalize-space(text())='#{title}']]")
+                "//div[contains(@class, 'listWrapper')][.//h2[contains(@class, 'list_header_title') and normalize-space(text())=#{title}]]")
     within(list, &block)
+  end
+
+  def escape_xpath(str)
+    return "'#{str}'" unless str.include?("'")
+
+    parts = str.split("'").map { |part| "'#{part}'" }
+    concat_str = parts.join(%(, "'", ))
+    "concat(#{concat_str})"
   end
 end
