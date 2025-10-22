@@ -46,7 +46,11 @@ class TopPage
     within(list, &block)
   end
 
-  def escape_xpath(title)
-    "'#{title.gsub("'", "''")}'"
+  def escape_xpath(str)
+    return "'#{str}'" unless str.include?("'")
+
+    parts = str.split("'").map { |part| "'#{part}'" }
+    concat_str = parts.join(%{, "'", })
+    "concat(#{concat_str})"
   end
 end
