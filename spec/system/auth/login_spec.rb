@@ -31,7 +31,7 @@ RSpec.describe 'Auth: Login', type: :system do
       expect(page).to have_selector('.alert.alert-danger')
       # name は保持、password は空欄
       expect(page).to have_field('Name', with: user.name)
-      expect(find_field('Password').value).to be_nil
+      expect(login_page.password_value).to be_nil
     end
   end
 end

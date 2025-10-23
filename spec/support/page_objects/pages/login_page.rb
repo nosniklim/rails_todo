@@ -17,4 +17,8 @@ class LoginPage
     click_button 'Sign in'
     self
   end
+
+  def password_value
+    find_field('Password').value
+  end
 end
