@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Authentication base', type: :system do
   let(:user) { create(:user, password: 'password') }
 
-  it 'signs in and reaches top' do
+  it 'ログインしてトップページに遷移すること' do
     LoginPage.new.visit!.login(name: user.name, password: 'password')
     expect(page).to have_current_path(root_path)
     expect(page).to have_selector('.header_menu')
