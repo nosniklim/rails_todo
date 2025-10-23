@@ -58,6 +58,6 @@ class RegistrationPage
 
   def have_flash?(text)
     # TODO: [data-testid="flash"]
-    page.has_selector?('alert.alert-info', text: text)
+    page.has_selector?('.alert.alert-info', text: text)
   end
 end
