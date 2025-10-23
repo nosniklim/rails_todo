@@ -5,12 +5,13 @@ require 'rails_helper'
 RSpec.describe 'Auth: Login', type: :system do
   let(:password) { 'password' }
   let!(:user)    { create(:user, password: password, password_confirmation: password) }
+  let(:login_page) { LoginPage.new }
 
   before { LoginPage.new.visit! }
 
   describe 'ログイン成功' do
     it 'name + password でログインしてトップページに遷移すること' do
-      LoginPage.new.login(name: user.name, password: password)
+      login_page.login(name: user.name, password: password)
       expect(page).to have_current_path(root_path)
       expect(page).to have_selector('.header_menu')
       expect(page).to have_link(user.name, href: edit_user_path(user))
@@ -22,7 +23,7 @@ RSpec.describe 'Auth: Login', type: :system do
 
   describe 'ログイン失敗' do
     it 'パスワードを間違えた場合はエラーが表示されること' do
-      LoginPage.new.login(name: user.name, password: 'wrong-pass')
+      login_page.login(name: user.name, password: 'wrong-pass')
       # 失敗した時はログイン画面を再表示
       expect(page).to have_current_path(new_user_session_path)
       # エラーメッセージ
