@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'CRUD base', type: :system do
   let(:user) { create(:user, password: 'password') }
 
-  it 'リストとカードの基本的なCURD操作' do
+  it 'リストとカードの基本的なCRUD操作' do
     sign_in_as(user)
 
     # Create List
