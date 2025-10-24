@@ -42,6 +42,7 @@ Metrics/BlockLength:
   Exclude:
     - 'config/environments/development.rb'
     - 'spec/requests/*_spec.rb'
+    - 'spec/system/**/*_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: CountBlocks.
