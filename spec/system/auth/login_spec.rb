@@ -13,6 +13,7 @@ RSpec.describe 'Auth: Login', type: :system do
     it 'name + password でログインしてトップページに遷移すること' do
       login_page.login(name: user.name, password: password)
       expect(page).to have_current_path(root_path)
+      # ヘッダーが表示されることを確認
       expect(page).to have_selector('.header_menu')
       expect(page).to have_link(user.name, href: edit_user_path(user))
       expect(page).to have_link('Todolist', href: root_path)
