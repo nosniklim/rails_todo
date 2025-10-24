@@ -17,7 +17,7 @@ if ENV['COVERAGE']
   require 'simplecov'
   SimpleCov.start 'rails' do
     add_filter %w[/config/ /vendor/ /spec/ /test/]
-    # minimum_coverage 60
+    minimum_coverage 80
   end
 end
 
