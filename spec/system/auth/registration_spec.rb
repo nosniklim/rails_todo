@@ -7,7 +7,7 @@ RSpec.describe 'Auth: Registration', type: :system do
   # NOTE: ユーザー作成機能をテストするのでcreateではなくbuild
   let!(:new_user) { build(:user) }
   let(:login_page) { LoginPage.new }
-  
+
   before { RegistrationPage.new.visit! }
 
   describe 'ログイン成功' do
@@ -43,7 +43,7 @@ RSpec.describe 'Auth: Registration', type: :system do
           expect(page).to have_field('Email', with: new_user.email)
           expect(login_page.password_value).to be_nil
         end
-    
+
         it '名前が未入力の場合はエラーを表示し、入力値（password以外）を保持して再表示' do
           RegistrationPage.new.sign_up(
             name: '', email: new_user.email,
@@ -56,7 +56,7 @@ RSpec.describe 'Auth: Registration', type: :system do
           expect(login_page.password_value).to be_nil
         end
       end
-    
+
       describe 'email' do
         it 'emailが不正なフォーマットの場合はエラーを表示し、入力値（password以外）を保持して再表示' do
           RegistrationPage.new.sign_up(
@@ -70,7 +70,7 @@ RSpec.describe 'Auth: Registration', type: :system do
           expect(login_page.password_value).to be_nil
         end
       end
-    
+
       describe 'password' do
         it 'パスワードが短すぎる場合はエラーを表示し、入力値（password以外）を保持して再表示' do
           RegistrationPage.new.sign_up(
@@ -84,7 +84,7 @@ RSpec.describe 'Auth: Registration', type: :system do
           expect(login_page.password_value).to be_nil
         end
       end
-    
+
       describe 'password_confirmation' do
         it '確認用パスワードが一致しない場合はエラーを表示し、入力値（password以外）を保持して再表示' do
           RegistrationPage.new.sign_up(
