@@ -94,8 +94,8 @@ jobs:
           bin/rails routes >/dev/null
           bin/rails runner 'puts "Boot OK"'
 
-  # ---- Tests ----
-  tests:
+  # ---- RSpec Tests ----
+  rspec:
     runs-on: ubuntu-latest
     environment: rails_todo
     timeout-minutes: 15
@@ -145,15 +145,16 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bin/rails db:prepare
 
-      - name: Run RSpec
-        if: ${{ hashFiles('spec/**/*') != '' }}
-        run: bundle exec rspec --format progress --force-color
-
+      # 並べ替え機能はMinitestでも検証しているため、補助的にMinitestも実行する
       - name: Run Minitest
         if: ${{ hashFiles('test/**/*') != '' }}
         env:
           DISABLE_SPRING: 1 # CIでは必要ないので無効化
         run: bin/rails test
+
+      - name: Run RSpec
+        if: ${{ hashFiles('spec/**/*') != '' }}
+        run: bundle exec rspec --format progress --force-color
 
       - name: Upload coverage report
         if: always()
