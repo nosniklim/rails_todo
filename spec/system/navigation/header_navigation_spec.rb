@@ -63,6 +63,7 @@ RSpec.describe 'Navigation: Global Header', type: :system do
 
     it 'Sign out リンクでサインアウト' do
       header.sign_out
+      # TODO: [data-testid="link-sign-out"]
       expect(page).to have_current_path(new_user_session_path).or have_no_selector('.header_menu_inner .nav-link', text: 'Sign out')
     end
   end
