@@ -19,7 +19,7 @@ RSpec.describe 'Navigation: Global Header', type: :system do
       [:card_show,  -> { list_card_path(list, card) }],
       [:card_new,   -> { new_list_card_path(list) }],
       [:card_edit,  -> { edit_list_card_path(list, card) }],
-      [:user_edit,  -> { edit_user_path(user) }],
+      [:user_edit,  -> { edit_user_path(user) }]
     ]
   end
 
