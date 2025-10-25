@@ -41,15 +41,17 @@ RSpec.describe 'A11y: Landmarks', type: :system do
 
         # サービス名の表示は1つ
         expect(page).to have_selector('.header_menu_title', text: 'Todolist', count: 1)
+      end
+    end
+  end
 
-        # リスト表示エリア
-        if name == :top
-          # トップページにはリスト表示エリアが1つある
-          expect(page).to have_selector('.listWrapper', count: 1)
-        else
-          # トップページ以外にはリスト表示エリアがない
-          expect(page).to have_no_selector('.listWrapper')
-        end
+  it 'トップページのみリスト表示エリアが存在すること' do
+    pages.each do |(name, path_lambda)|
+      visit path_lambda.call
+      if name == :top
+        expect(page).to have_selector('.listWrapper', count: 1)
+      else
+        expect(page).to have_no_selector('.listWrapper')
       end
     end
   end
