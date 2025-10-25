@@ -54,11 +54,9 @@ RSpec.describe 'A11y: Landmarks', type: :system do
     end
   end
 
-  context '多重main回避' do
-    it 'main が2つ以上存在しないこと' do
-      pending 'SPA実装時に役に立つかも知れないので残しておく'
-      visit root_path
-      expect(page).to have_selector('[role="main"]', count: 1)
-    end
+  it 'main が2つ以上存在しないこと' do
+    pending 'SPA実装時に役に立つかも知れないので残しておく'
+    visit root_path
+    expect(page).to have_selector('[role="main"]', count: 1)
   end
 end
