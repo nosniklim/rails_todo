@@ -29,7 +29,7 @@ class ListFormPage
 
   def select_position(position)
     # TODO: [data-testid="select-list-position"]
-    select position, from: '#list_position'
+    select position, from: 'Position'
   end
 
   def submit(button_text)
