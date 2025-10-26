@@ -7,7 +7,6 @@ RSpec.describe 'Lists: Edit', type: :system do
   let!(:user)    { create(:user, password: password, password_confirmation: password) }
   let(:list_form) { ListFormPage.new }
 
-  # 初期状態：1..3 の連番で並ぶ
   let!(:list1) { create(:list, user: user, title: 'Todo',  position: 1) }
   let!(:list2) { create(:list, user: user, title: 'Doing', position: 2) }
   let!(:list3) { create(:list, user: user, title: 'Done',  position: 3) }
