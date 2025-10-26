@@ -63,9 +63,8 @@ RSpec.describe 'Lists: Edit', type: :system do
       expect(titles).to eq %w[Doing Todo Done]
 
       # positionが更新されていることを確認
-      lists = List.where(user: user).order(:position) 
-      expect(lists.pluck(:title)).to eq %w[Doing Todo Done]
-      expect(lists.pluck(:position)).to eq [1, 2, 3]
+      expect(List.where(user: user).order(:position).pluck(:title)).to eq %w[Doing Todo Done]
+      expect(List.where(user: user).order(:position).pluck(:position)).to eq [1, 2, 3]
     end
   end
 
