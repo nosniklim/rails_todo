@@ -20,7 +20,7 @@ RSpec.describe 'Lists: Delete', type: :system do
       find('a[data-confirm="Are you sure you want to remove \'Doing\'?"]').click
     end
     expect(page).to have_current_path(root_path)
-    
+
     # リストの表示順が変更されていることを確認
     # TODO: [data-testid="list-title"]
     titles = all('.list_header_title').map(&:text)
