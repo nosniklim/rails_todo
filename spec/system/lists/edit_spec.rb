@@ -61,10 +61,10 @@ RSpec.describe 'Lists: Edit', type: :system do
       # リストの表示順が変更されていることを確認
       # TODO: [data-testid="list-title"]
       titles = all('.list_header_title').map(&:text)
-      expect(titles).to eq ['Doing', 'Todo', 'Done']
+      expect(titles).to eq %w[Doing Todo Done]
 
       # positionが更新されていることを確認
-      expect(List.where(user: user).order(:position).pluck(:title)).to eq ['Doing', 'Todo', 'Done']
+      expect(List.where(user: user).order(:position).pluck(:title)).to eq %w[Doing Todo Done]
       expect(List.where(user: user).order(:position).pluck(:position)).to eq [1, 2, 3]
     end
   end
