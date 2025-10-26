@@ -28,8 +28,9 @@ RSpec.describe 'Lists: Delete', type: :system do
     expect(page).to have_no_selector('.list_header_title', text: 'Doing')
 
     # positionが更新されていることを確認
-    expect(List.where(user: user).order(:position).pluck(:title)).to eq %w[Todo Done]
-    expect(List.where(user: user).order(:position).pluck(:position)).to eq [1, 2]
+    lists = List.where(user: user).order(:position)
+    expect(lists.pluck(:title)).to eq %w[Todo Done]
+    expect(lists.pluck(:position)).to eq [1, 2]
   end
 
   # it 'confirmをキャンセルすると削除されない', js: true do
