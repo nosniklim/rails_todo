@@ -38,7 +38,7 @@ RSpec.describe 'Lists: Edit', type: :system do
   end
 
   describe '更新成功' do
-    it 'タイトルを変更してして保存するとトップページに遷移すること' do
+    it 'タイトルを変更して保存するとトップページに遷移すること' do
       visit edit_list_path(list1)
       list_form.fill_title('Todo (updated)')
       click_button 'Save'
