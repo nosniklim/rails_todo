@@ -41,8 +41,9 @@ RSpec.describe 'Lists: Create', type: :system do
       list_form.fill_title('')
       click_button 'Create'
 
-      # 失敗（編集画面に留まる）
-      expect(page).to have_current_path(new_list_path).or have_current_path(list_index_path)
+      # 失敗（作成画面に留まる）
+      # FIXME: createでrender :newしてるからなのかnew_list_pathから遷移してしまっている
+      expect(page).to have_current_path(list_index_path)
 
       # エラーメッセージ
       # TODO: [data-testid="form-error"], [data-testid="flash"]
