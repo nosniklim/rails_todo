@@ -11,12 +11,12 @@ RSpec.describe 'Cards: Delete', type: :system do
   let!(:list_a)  { create(:list, user: user, title: 'A', position: 1) }
 
   # Cards
-  let!(:card_1)      { create(:card, list: list_a, title: 'Task A1', position: 1) }
-  let!(:card_2)      { create(:card, list: list_a, title: 'Task A2', position: 2) }
+  let!(:card_a1)      { create(:card, list: list_a, title: 'Task A1', position: 1) }
+  let!(:card_a2)      { create(:card, list: list_a, title: 'Task A2', position: 2) }
 
   before { sign_in_as(user) }
 
-  before { visit list_card_path(list_a, card_1) }
+  before { visit list_card_path(list_a, card_a1) }
 
   it '削除リンクをクリックすると確認メッセージが表示され、トップページから削除される' do
     find('a[data-confirm="Are you sure you want to remove this card?"]').click
