@@ -33,8 +33,8 @@ RSpec.describe 'Cards: Edit', type: :system do
       # TODO: [data-testid="input-card-memo"]
       expect(page).to have_selector('.cardeditForm_memo',   wait: 1)
       # TODO: [data-testid="select-card-list"]
-      expect(page).to have_selector('.cardeditForm_list',  wait: 1)
-      #TODO: [data-testid="select-card-position"]
+      expect(page).to have_selector('.cardeditForm_list', wait: 1)
+      # TODO: [data-testid="select-card-position"]
       expect(page).to have_selector('.cardeditForm_position', wait: 1)
 
       # List
