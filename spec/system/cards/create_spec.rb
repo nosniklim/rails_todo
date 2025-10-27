@@ -12,8 +12,8 @@ RSpec.describe 'Cards: Create', type: :system do
   let!(:list_a)  { create(:list, user: user, title: 'A', position: 1) }
   let!(:list_b)  { create(:list, user: user, title: 'B', position: 2) }
 
-   # Cards
-   let!(:card_a1) { create(:card, list: list_a, title: 'Task A1', memo: 'Memo A1', position: 1) }
+  # Cards
+  let!(:card_a1) { create(:card, list: list_a, title: 'Task A1', memo: 'Memo A1', position: 1) }
 
   before { sign_in_as(user) }
 
