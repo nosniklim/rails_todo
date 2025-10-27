@@ -34,12 +34,12 @@ class CardFormPage
 
   def select_list(name)
     # TODO: [data-testid="select-card-list"]
-    select name, from: 'List'
+    select name, from: 'card_list_id'
   end
 
   def select_position(position)
     # TODO: [data-testid="select-card-position"]
-    select position, from: 'Position'
+    select position, from: 'card_position'
   end
 
   def submit(button_text)
