@@ -32,6 +32,8 @@ RSpec.describe 'Lists: Create', type: :system do
       within('.listWrapper') do
         # TODO: [data-testid="list-title"]
         expect(page).to have_selector('.list_header_title', text: 'Todo')
+        # NOTE: カード作成リンクが表示されていることも確認
+        expect(page).to have_selector('.addCard_link', text: 'Add a card...')
       end
     end
   end
