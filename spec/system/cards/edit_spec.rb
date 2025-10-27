@@ -15,7 +15,7 @@ RSpec.describe 'Cards: Edit', type: :system do
   # Cards
   let!(:card_a1) { create(:card, list: list_a, title: 'Task A1', memo: 'Memo A1', position: 1) }
   let!(:card_a2) { create(:card, list: list_a, title: 'Task A2', memo: 'Memo A2', position: 2) }
-  let!(:card_b1) { create(:card, list: list_b, title: 'Task B1', memo: 'Memo A2', position: 1) }
+  let!(:card_b1) { create(:card, list: list_b, title: 'Task B1', memo: 'Memo B1', position: 1) }
 
   before { sign_in_as(user) }
 
