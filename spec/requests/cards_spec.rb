@@ -72,7 +72,6 @@ RSpec.describe 'Cards', type: :request do
       let(:invalid_params) { { card: { title: '', list_id: list.id } } }
 
       it 'カードを作成せず、新規作成画面を再表示する' do
-        pending 'FIXME: 作成失敗時にNilClassのカラムを参照しないようにする'
         expect do
           post list_card_index_path(list_id: list.id), params: invalid_params
         end.not_to change(Card, :count)
