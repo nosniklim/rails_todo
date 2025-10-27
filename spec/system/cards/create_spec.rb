@@ -70,7 +70,7 @@ RSpec.describe 'Cards: Create', type: :system do
       click_button 'Create'
 
       # 失敗（編集画面に留まる）
-      # FIXME: createでrender :newしてるからなのかnew_list_card_pathから遷移してしまっている
+      # NOTE: リダイレクトせずrender :newしてるためcreateアクションのパスが表示される
       expect(page).to have_current_path(list_card_index_path(list_a))
 
       # エラーメッセージ

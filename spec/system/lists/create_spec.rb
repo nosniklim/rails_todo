@@ -42,7 +42,7 @@ RSpec.describe 'Lists: Create', type: :system do
       click_button 'Create'
 
       # 失敗（作成画面に留まる）
-      # FIXME: createでrender :newしてるからなのかnew_list_pathから遷移してしまっている
+      # NOTE: リダイレクトせずrender :newしてるためcreateアクションのパスが表示される
       expect(page).to have_current_path(list_index_path)
 
       # エラーメッセージ
