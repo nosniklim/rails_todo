@@ -37,20 +37,8 @@ class TopPage
     CardShowPage.new
   end
 
-  private
-
   def within_list(list_title, &block)
-    title = escape_xpath(list_title)
-    list = find(:xpath,
-                "//div[contains(@class, 'listWrapper')][.//h2[contains(@class, 'list_header_title') and normalize-space(text())=#{title}]]")
+    list = find('.list', text: list_title, match: :first)
     within(list, &block)
-  end
-
-  def escape_xpath(str)
-    return "'#{str}'" unless str.include?("'")
-
-    parts = str.split("'").map { |part| "'#{part}'" }
-    concat_str = parts.join(%(, "'", ))
-    "concat(#{concat_str})"
   end
 end
