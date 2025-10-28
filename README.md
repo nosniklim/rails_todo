@@ -18,7 +18,8 @@ ToDoリスト管理ツール
 - 静的解析: RuboCop、ERB Lint、ESLint、Stylelint、Prettier
 - セキュリティチェック: Bundler Audit、Brakeman
 - テスト: RSpec（一部Unitテストは Minitest）
-- カバレッジ計測: SimpleCov
+- System spec: Capybara（Rack::Test / Selenium）
+- カバレッジ計測: SimpleCov（カバレッジ≥85%）
 - N+1クエリ検知: Bullet
 - CI: GitHub Actions
 
