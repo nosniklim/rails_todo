@@ -56,6 +56,9 @@ RUN set -eux; \
   apt-get update -qq && apt-get install -y --no-install-recommends google-chrome-stable; \
   rm -rf /var/lib/apt/lists/*
 
+# hotfix: Bundlerのバージョンを固定してインストール
+RUN gem install bundler -v 2.4.22
+
 # コンテナ内の作業ディレクトリを割り当て
 WORKDIR /app
 
