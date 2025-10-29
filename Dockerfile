@@ -56,6 +56,9 @@ RUN set -eux; \
   apt-get update -qq && apt-get install -y --no-install-recommends google-chrome-stable; \
   rm -rf /var/lib/apt/lists/*
 
+# hotfix: RubyGemsをアップデート
+RUN gem update --system 3.2.3
+
 # hotfix: Bundlerのバージョンを固定してインストール
 RUN gem install bundler -v 2.4.22
 
