@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 # hotfix: rubygemsとの依存関係を解決するためffiのバージョンを固定
-gem "ffi", "~> 1.15"
+gem 'ffi', '~> 1.15'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
