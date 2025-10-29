@@ -19,8 +19,6 @@ RUN set -eux; \
 RUN set -eux; \
   apt-get update -qq && apt-get install -y --no-install-recommends \
     curl \
-    ca-certificates \
-    gnupg \
     wget \
     unzip \
     fonts-liberation \
