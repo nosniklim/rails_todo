@@ -57,7 +57,7 @@ RUN set -eux; \
   rm -rf /var/lib/apt/lists/*
 
 # hotfix: Bundlerのバージョンを固定してインストール
-RUN gem install bundler -v 2.4.22
+RUN gem install bundler -v 2.1.4
 
 # コンテナ内の作業ディレクトリを割り当て
 WORKDIR /app
