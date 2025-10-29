@@ -284,6 +284,7 @@ GEM
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
     smart_properties (1.17.0)
+    spring (3.1.1)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -340,6 +341,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   faker
+  ffi (~> 1.15)
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mysql2 (~> 0.5)
@@ -354,6 +356,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
+  spring
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
