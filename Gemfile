@@ -22,6 +22,9 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# hotfix: rubygemsとの依存関係を解決するためffiのバージョンを固定
+gem 'ffi', '~> 1.15'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -34,7 +37,8 @@ group :development, :test do
 
   # Testing
   gem 'rspec-rails'
-  gem 'factory_bot_rails'
+  # hotfix: 依存関係を解決するためバージョンを固定
+  gem 'factory_bot_rails', '~> 6.2.0'
   gem 'rails-controller-testing'
   gem 'bullet'
 end
@@ -52,7 +56,7 @@ group :development do
   # Lint
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
-  gem 'erb_lint', require: false # NOTE: slimへの移行を検討
+  gem 'erb_lint', '~> 0.1.3', require: false # hotfix: 依存関係を解決するためバージョン固定 # NOTE: slimへの移行を検討
 end
 
 group :test do

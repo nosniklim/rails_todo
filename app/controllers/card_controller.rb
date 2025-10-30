@@ -3,22 +3,14 @@ class CardController < ApplicationController
 
   def show; end
 
-  def edit
-    @lists = List.where(user: current_user).select(:id, :title)
-    @positions = Card.where(list_id: @card.list_id).select('position as `key`, position as value').order(:position)
-  end
-
-  def update
-    if @card.update_with_sort(card_params)
-      redirect_to :root
-    else
-      render action: :edit
-    end
-  end
-
   def new
     @card = Card.new
     @list = List.find_by(id: params[:list_id])
+  end
+
+  def edit
+    @lists = List.where(user: current_user).select(:id, :title)
+    @positions = Card.where(list_id: @card.list_id).select('position as `key`, position as value').order(:position)
   end
 
   def create
@@ -28,6 +20,14 @@ class CardController < ApplicationController
       redirect_to :root
     else
       render action: :new
+    end
+  end
+
+  def update
+    if @card.update_with_sort(card_params)
+      redirect_to :root
+    else
+      render action: :edit
     end
   end
 

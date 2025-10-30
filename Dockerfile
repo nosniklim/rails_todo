@@ -56,6 +56,14 @@ RUN set -eux; \
   apt-get update -qq && apt-get install -y --no-install-recommends google-chrome-stable; \
   rm -rf /var/lib/apt/lists/*
 
+# hotfix: Bundlerのバージョンを固定してインストール
+RUN gem install bundler -v 2.1.4
+# hotfix: bundlerにRubyプラットフォームを強制
+# NOTE: musl 向けプリビルド gem（例: ffi-1.17.x-x86_64-linux-musl）が選ばれ
+#       RubyGems >= 3.3.22 要件でビルド失敗する問題を暫定回避する
+# TODO: Bundlerのバージョンを最新に更新する際は、Gemfile.lock内のBundlerバージョンも合わせて更新が必要
+ENV BUNDLE_FORCE_RUBY_PLATFORM=1
+
 # コンテナ内の作業ディレクトリを割り当て
 WORKDIR /app
 

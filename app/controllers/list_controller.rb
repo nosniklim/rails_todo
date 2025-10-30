@@ -5,6 +5,10 @@ class ListController < ApplicationController
     @list = List.new
   end
 
+  def edit
+    @positions = List.where(user_id: current_user).select('position as `key`, position as value').order(:position)
+  end
+
   def create
     @list = List.new(list_params)
     if @list.save
@@ -12,10 +16,6 @@ class ListController < ApplicationController
     else
       render action: :new
     end
-  end
-
-  def edit
-    @positions = List.where(user_id: current_user).select('position as `key`, position as value').order(:position)
   end
 
   def update
