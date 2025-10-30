@@ -148,7 +148,7 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bin/rails db:prepare
 
-      # hotfix: CI環境でコンパイルエラーになるためRials7.1に上げるまでWebpackerのダミーアセットを追加する
+      # hotfix: CI環境でコンパイルエラーになるためRails7.1に上げるまでWebpackerのダミーアセットを追加する
       - name: Prepare dummy Webpacker assets
         run: |
           mkdir -p public/packs-test/js
