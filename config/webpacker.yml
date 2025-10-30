@@ -73,7 +73,7 @@ development:
 
 test:
   <<: *default
-  # hotfix: CI環境でコンパイルエラーになるためRials7.1に上げるまでfalseに設定
+  # hotfix: CI環境でコンパイルエラーになるためRails7.1に上げるまでfalseに設定
   compile: false
 
   # Compile test packs to a separate directory
