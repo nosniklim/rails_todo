@@ -1,4 +1,4 @@
-FROM ruby:2.6-bullseye
+FROM ruby:2.7.8-bullseye
 
 # Debian Bullseyeの署名鍵問題の対応: apt-get updateでパッケージリストを更新するためのkeyringとhttpsを有効化
 RUN set -eux; \
