@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.10'
+ruby '2.7.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4'
@@ -77,3 +77,6 @@ gem 'devise'
 gem 'faker'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
+
+# NOTE: Ruby2.7では標準ライブラリに含まれるが、Ruby3.1以降で標準ライブラリから分離されるので、将来的な互換性を考慮して明示的に追加
+gem 'net-protocol'

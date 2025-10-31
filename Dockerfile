@@ -1,4 +1,4 @@
-FROM ruby:2.6-bullseye
+FROM ruby:2.7.8-bullseye
 
 # Debian Bullseyeの署名鍵問題の対応: apt-get updateでパッケージリストを更新するためのkeyringとhttpsを有効化
 RUN set -eux; \
@@ -57,7 +57,7 @@ RUN set -eux; \
   rm -rf /var/lib/apt/lists/*
 
 # hotfix: Bundlerのバージョンを固定してインストール
-RUN gem install bundler -v 2.1.4
+RUN gem install bundler -v 2.4.22
 # hotfix: bundlerにRubyプラットフォームを強制
 # NOTE: musl 向けプリビルド gem（例: ffi-1.17.x-x86_64-linux-musl）が選ばれ
 #       RubyGems >= 3.3.22 要件でビルド失敗する問題を暫定回避する
