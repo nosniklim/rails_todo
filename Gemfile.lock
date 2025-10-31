@@ -365,7 +365,7 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 2.7.8p225
+   ruby 3.0.7p220
 
 BUNDLED WITH
    2.4.22
