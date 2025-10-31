@@ -77,3 +77,6 @@ gem 'devise'
 gem 'faker'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
+
+# hotfix: Ruby2.7では標準ライブラリに含まれるためgem版を使用するようにする
+gem 'net-protocol'
