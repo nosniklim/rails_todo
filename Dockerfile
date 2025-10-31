@@ -57,7 +57,7 @@ RUN set -eux; \
   rm -rf /var/lib/apt/lists/*
 
 # hotfix: Bundlerのバージョンを固定してインストール
-RUN gem install bundler -v 2.4.22
+RUN gem install bundler -v 2.5.23
 # hotfix: bundlerにRubyプラットフォームを強制
 # NOTE: musl 向けプリビルド gem（例: ffi-1.17.x-x86_64-linux-musl）が選ばれ
 #       RubyGems >= 3.3.22 要件でビルド失敗する問題を暫定回避する
